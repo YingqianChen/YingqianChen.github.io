@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Yingqian&#39;s Site</title>
-    <link>http://localhost:1313/</link>
+    <link>https://yingqianchen.github.io/</link>
     <description>Recent content on Yingqian&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 01 Mar 2024 17:45:40 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://yingqianchen.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My New Post</title>
-      <link>http://localhost:1313/posts/my-new-post/</link>
+      <link>https://yingqianchen.github.io/posts/my-new-post/</link>
       <pubDate>Fri, 01 Mar 2024 17:45:40 +0800</pubDate>
-      <guid>http://localhost:1313/posts/my-new-post/</guid>
+      <guid>https://yingqianchen.github.io/posts/my-new-post/</guid>
       <description>First post.</description>
     </item>
     <item>
       <title>Shantou, CN</title>
-      <link>http://localhost:1313/photos/shantou1/</link>
+      <link>https://yingqianchen.github.io/photos/shantou1/</link>
       <pubDate>Fri, 10 Mar 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/photos/shantou1/</guid>
+      <guid>https://yingqianchen.github.io/photos/shantou1/</guid>
       <description>The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of over a mile (6,093 feet or 1,857 meters).</description>
     </item>
     <item>
       <title>Shantou, CN</title>
-      <link>http://localhost:1313/photos/shantou2/</link>
+      <link>https://yingqianchen.github.io/photos/shantou2/</link>
       <pubDate>Fri, 10 Mar 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/photos/shantou2/</guid>
+      <guid>https://yingqianchen.github.io/photos/shantou2/</guid>
       <description>The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of over a mile (6,093 feet or 1,857 meters).</description>
     </item>
     <item>
       <title>Shantou, CN</title>
-      <link>http://localhost:1313/photos/shantou3/</link>
+      <link>https://yingqianchen.github.io/photos/shantou3/</link>
       <pubDate>Fri, 10 Mar 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/photos/shantou3/</guid>
+      <guid>https://yingqianchen.github.io/photos/shantou3/</guid>
       <description>The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of over a mile (6,093 feet or 1,857 meters).</description>
     </item>
   </channel>
