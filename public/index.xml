@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yingqian&#39;s Site</title>
+    <link>https://example.org/</link>
+    <description>Recent content on Yingqian&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Mar 2024 17:45:40 +0800</lastBuildDate>
+    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My New Post</title>
+      <link>https://example.org/posts/my-new-post/</link>
+      <pubDate>Fri, 01 Mar 2024 17:45:40 +0800</pubDate>
+      <guid>https://example.org/posts/my-new-post/</guid>
+      <description>First post.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://example.org/photos/shantou/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://example.org/photos/shantou/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
