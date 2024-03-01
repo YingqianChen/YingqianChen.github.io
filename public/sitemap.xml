@@ -25,19 +25,35 @@
     
         
         <url>
-            <loc>https://example.org/photos/shantou/</loc>
+            <loc>https://example.org/photos/</loc>
+            <lastmod>2023-03-10T00:00:00+00:00</lastmod>
+        </url>
+        
+    
+        
+        <url>
+            <loc>https://example.org/photos/shantou1/</loc>
+            <lastmod>2023-03-10T00:00:00+00:00</lastmod>
+        </url>
+        
+    
+        
+        <url>
+            <loc>https://example.org/photos/shantou2/</loc>
+            <lastmod>2023-03-10T00:00:00+00:00</lastmod>
+        </url>
+        
+    
+        
+        <url>
+            <loc>https://example.org/photos/shantou3/</loc>
+            <lastmod>2023-03-10T00:00:00+00:00</lastmod>
         </url>
         
     
         
         <url>
             <loc>https://example.org/categories/</loc>
-        </url>
-        
-    
-        
-        <url>
-            <loc>https://example.org/photos/</loc>
         </url>
         
     
