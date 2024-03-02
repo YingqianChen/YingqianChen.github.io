@@ -2,17 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Yingqian&#39;s Site</title>
-    <link>https://yingqianchen.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Yingqian&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 01 Mar 2024 17:45:40 +0800</lastBuildDate>
-    <atom:link href="https://yingqianchen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sat, 02 Mar 2024 14:03:12 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My New Post</title>
-      <link>https://yingqianchen.github.io/posts/my-new-post/</link>
+      <title>3.2</title>
+      <link>http://localhost:1313/posts/3.2/</link>
+      <pubDate>Sat, 02 Mar 2024 14:03:12 +0800</pubDate>
+      <guid>http://localhost:1313/posts/3.2/</guid>
+      <description>播客 最近几天经常听播客，听怎么做产品，听求职、听读研、听小时候想不通的格林童话。蓝胡子的故事我只看过一次，以彩色动画的形式。后续这个系列好像</description>
+    </item>
+    <item>
+      <title>New Post</title>
+      <link>http://localhost:1313/posts/my-new-post/</link>
       <pubDate>Fri, 01 Mar 2024 17:45:40 +0800</pubDate>
-      <guid>https://yingqianchen.github.io/posts/my-new-post/</guid>
+      <guid>http://localhost:1313/posts/my-new-post/</guid>
       <description>First post.</description>
     </item>
   </channel>
