@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Yingqian&#39;s Site</title>
-    <link>http://localhost:1313/zh-cn/</link>
+    <link>https://yingqianchen.github.io/zh-cn/</link>
     <description>Recent content on Yingqian&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <atom:link href="http://localhost:1313/zh-cn/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://yingqianchen.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
