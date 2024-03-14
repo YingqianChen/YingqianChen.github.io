@@ -2,224 +2,224 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/zh-cn/categories/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/categories/</loc>
     <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/categories/"
+                href="https://yingqianchen.github.io/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/categories/"
+                href="https://yingqianchen.github.io/zh-cn/categories/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/categories/gallery/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/categories/gallery/</loc>
     <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/categories/gallery/"
+                href="https://yingqianchen.github.io/categories/gallery/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/categories/gallery/"
+                href="https://yingqianchen.github.io/zh-cn/categories/gallery/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/posts/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/posts/</loc>
     <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/posts/"
+                href="https://yingqianchen.github.io/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/posts/"
+                href="https://yingqianchen.github.io/zh-cn/posts/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/tags/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/tags/</loc>
     <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/tags/"
+                href="https://yingqianchen.github.io/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/tags/"
+                href="https://yingqianchen.github.io/zh-cn/tags/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/</loc>
     <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/"
+                href="https://yingqianchen.github.io/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/"
+                href="https://yingqianchen.github.io/zh-cn/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/2024/03/14/%E8%8A%B1.html/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/2024/03/14/%E8%8A%B1.html/</loc>
     <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/2024/03/14/flower.html/"
+                href="https://yingqianchen.github.io/2024/03/14/flower.html/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/2024/03/14/%E8%8A%B1.html/"
+                href="https://yingqianchen.github.io/zh-cn/2024/03/14/%E8%8A%B1.html/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/tags/%E6%91%84%E5%BD%B1/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/tags/%E6%91%84%E5%BD%B1/</loc>
     <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/zh-cn/github/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/github/</loc>
     <lastmod>2024-03-14T16:40:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/github/"
+                href="https://yingqianchen.github.io/github/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/github/"
+                href="https://yingqianchen.github.io/zh-cn/github/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/archives/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/archives/</loc>
     <lastmod>2024-03-14T16:40:34+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/archives/"
+                href="https://yingqianchen.github.io/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/archives/"
+                href="https://yingqianchen.github.io/zh-cn/archives/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/about/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/about/</loc>
     <lastmod>2024-03-14T17:08:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/about/"
+                href="https://yingqianchen.github.io/about/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/about/"
+                href="https://yingqianchen.github.io/zh-cn/about/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/tags/%E6%97%85%E8%A1%8C/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/tags/%E6%97%85%E8%A1%8C/</loc>
     <lastmod>2024-03-14T17:08:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/zh-cn/2024/03/04/%E6%97%85%E8%A1%8C.html/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/2024/03/04/%E6%97%85%E8%A1%8C.html/</loc>
     <lastmod>2024-03-14T17:08:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/2024/03/04/travel.html/"
+                href="https://yingqianchen.github.io/2024/03/04/travel.html/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/2024/03/04/%E6%97%85%E8%A1%8C.html/"
+                href="https://yingqianchen.github.io/zh-cn/2024/03/04/%E6%97%85%E8%A1%8C.html/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/2024/03/02/hugo-encrypt.html/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/2024/03/02/hugo-encrypt.html/</loc>
     <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/2024/03/02/typography.html/"
+                href="https://yingqianchen.github.io/2024/03/02/typography.html/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/2024/03/02/hugo-encrypt.html/"
+                href="https://yingqianchen.github.io/zh-cn/2024/03/02/hugo-encrypt.html/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/tags/%E9%9A%8F%E7%AC%94/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/tags/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/tags/%E9%9A%8F%E7%AC%94/"
+                href="https://yingqianchen.github.io/tags/%E9%9A%8F%E7%AC%94/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/tags/%E9%9A%8F%E7%AC%94/"
+                href="https://yingqianchen.github.io/zh-cn/tags/%E9%9A%8F%E7%AC%94/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/search/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/search/</loc>
     <lastmod>2024-03-13T17:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/search/"
+                href="https://yingqianchen.github.io/search/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/search/"
+                href="https://yingqianchen.github.io/zh-cn/search/"
                 />
   </url><url>
-    <loc>http://localhost:1313/zh-cn/links/</loc>
+    <loc>https://yingqianchen.github.io/zh-cn/links/</loc>
     <lastmod>2024-03-13T17:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/links/"
+                href="https://yingqianchen.github.io/links/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/links/"
+                href="https://yingqianchen.github.io/zh-cn/links/"
                 />
   </url>
 </urlset>
