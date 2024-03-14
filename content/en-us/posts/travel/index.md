@@ -1,13 +1,13 @@
 ---
 title: Travel Gallery
-date: 2024-03-04T02:49:13+02:00
-slug: 旅行
+date: 2024-03-04T02:49:13+08:00
+slug: Travel
 featured_image: hainan1.jpg
-summary: 旅行合集
+summary: 
 layout: gallery
 comments: true
 tags:
-  - 旅行
+  - Travel
 categories:
   - Gallery
 ---
