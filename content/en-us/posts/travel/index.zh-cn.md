@@ -7,6 +7,7 @@ summary:
 layout: gallery
 comments: true
 tags:
+  - 摄影
   - 旅行
 categories:
   - Gallery

@@ -8,6 +8,7 @@ layout: gallery
 comments: true
 tags:
   - Photography
+  - Flower
 categories:
   - Gallery
 ---
