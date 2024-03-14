@@ -1,14 +1,12 @@
 ---
 title: "3月2日随笔"
 date: 2024-03-02T14:03:12+08:00
-draft: false
-slug: hugo-encrypt
+slug: typography
 summary: "想到哪写到哪"
+featured_image: cover.jpg
 tags:
   - "随笔"
 ---
-
-![](/images/picture1.jpg)
 
 ## 播客
 
