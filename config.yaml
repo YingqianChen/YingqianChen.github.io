@@ -34,8 +34,8 @@ permalinks:
   posts: /:year/:month/:day/:slug.html # 2019/01/01/hello-world.html
   pages: /:slug.html # about.html
 
-author:
-  name: Yingqian
+# author:
+#   name: Yingqian
 
 frontmatter:
   lastmod:

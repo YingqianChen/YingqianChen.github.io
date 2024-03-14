@@ -11,7 +11,7 @@
         <title>Yingqian&#39;s Site</title>
         <atom:link href="%7balternate%20%7brss%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%20false%20false%200%7d%20/zh-cn/index.xml%20https://yingqianchen.github.io/zh-cn/index.xml%7d" rel="self" type="application/rss+xml" />
         <link>https://yingqianchen.github.io/zh-cn/</link>
-        <managingEditor>Yingqian</managingEditor>
+        <managingEditor></managingEditor>
         <description>A simple, performance-first, SEO-friendly Hugo theme</description>
         <lastBuildDate>Thu, 14 Mar 2024 17:05:13 +0800</lastBuildDate>
         <language>zh-cn</language>
