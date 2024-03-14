@@ -35,7 +35,7 @@ permalinks:
   pages: /:slug.html # about.html
 
 author:
-  name: 'Ice-Hazymoon'
+  name: Ice-Hazymoon
 
 frontmatter:
   lastmod:
