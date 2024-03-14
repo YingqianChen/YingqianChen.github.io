@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://yingqianchen.github.io/zh-cn/categories/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
+    <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -18,7 +18,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/categories/gallery/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
+    <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -33,7 +33,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/posts/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
+    <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -48,7 +48,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/tags/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
+    <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -63,7 +63,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
+    <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -77,13 +77,8 @@
                 href="https://yingqianchen.github.io/zh-cn/"
                 />
   </url><url>
-    <loc>https://yingqianchen.github.io/zh-cn/tags/%E8%8A%B1/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/2024/03/14/%E8%8A%B1.html/</loc>
-    <lastmod>2024-03-14T17:12:50+08:00</lastmod>
+    <lastmod>2024-03-14T20:52:01+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -96,6 +91,11 @@
                 hreflang="zh-cn"
                 href="https://yingqianchen.github.io/zh-cn/2024/03/14/%E8%8A%B1.html/"
                 />
+  </url><url>
+    <loc>https://yingqianchen.github.io/zh-cn/tags/%E6%91%84%E5%BD%B1/</loc>
+    <lastmod>2024-03-14T20:52:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/github/</loc>
     <lastmod>2024-03-14T16:40:31+08:00</lastmod>
@@ -163,7 +163,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/2024/03/02/hugo-encrypt.html/</loc>
-    <lastmod>2024-03-14T15:32:50+08:00</lastmod>
+    <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -178,7 +178,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/zh-cn/tags/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2024-03-14T15:32:50+08:00</lastmod>
+    <lastmod>2024-03-14T21:02:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link

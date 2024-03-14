@@ -7,7 +7,7 @@ summary: Some photos of flowers
 layout: gallery
 comments: true
 tags:
-  - Flower
+  - Photography
 categories:
   - Gallery
 ---

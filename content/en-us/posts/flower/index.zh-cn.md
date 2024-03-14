@@ -7,7 +7,7 @@ summary: 花的集合
 layout: gallery
 comments: true
 tags:
-  - 花
+  - 摄影
 categories:
   - Gallery
 ---
