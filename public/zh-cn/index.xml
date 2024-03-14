@@ -9,39 +9,11 @@
 
     <channel>
         <title>Yingqian&#39;s Site</title>
-        <atom:link href="%7balternate%20%7brss%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%20false%20false%200%7d%20/zh-cn/index.xml%20https://yingqianchen.github.io/zh-cn/index.xml%7d" rel="self" type="application/rss+xml" />
-        <link>https://yingqianchen.github.io/zh-cn/</link>
+        <atom:link href="%7balternate%20%7brss%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%20false%20false%200%7d%20/zh-cn/index.xml%20http://localhost:1313/zh-cn/index.xml%7d" rel="self" type="application/rss+xml" />
+        <link>http://localhost:1313/zh-cn/</link>
         <managingEditor>Ice-Hazymoon</managingEditor>
         <description>A simple, performance-first, SEO-friendly Hugo theme</description>
-        <lastBuildDate>Thu, 14 Mar 2024 14:03:45 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
         <language>zh-cn</language>
-        <generator>Hugo -- gohugo.io</generator><item>
-            <title>3月2日随笔</title>
-            <link>https://yingqianchen.github.io/zh-cn/2024/03/02/hugo-encrypt.html/</link>
-            <pubDate>Sat, 02 Mar 2024 14:03:12 +0800</pubDate>
-            <guid>https://yingqianchen.github.io/zh-cn/2024/03/02/hugo-encrypt.html/</guid><description>&lt;p&gt;
-&lt;/p&gt;
-
-
-&lt;h2 class=&#34;group &#34; id=&#34;播客&#34;
-    &gt;播客&lt;a href=&#34;#%e6%92%ad%e5%ae%a2&#34;
-        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
-&gt;&lt;/h2&gt;
-
-&lt;p&gt;最近几天经常听播客，听怎么做产品，听求职、听读研、听小时候想不通的格林童话。蓝胡子的故事我只看过一次，以彩色动画的形式。后续这个系列好像被下架了。&lt;/p&gt;
-
-
-&lt;h2 class=&#34;group &#34; id=&#34;脱口秀&#34;
-    &gt;脱口秀&lt;a href=&#34;#%e8%84%b1%e5%8f%a3%e7%a7%80&#34;
-        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
-&gt;&lt;/h2&gt;
-
-&lt;p&gt;谈论，调侃，甚至以冒犯的形式讲述差异，是尊重的外化表现。人人平等可以是社会的美好愿景，但性别、种族、文化背景的差异是真实存在的隔阂，这些是没有办法被忽略或者用“一样”去弥合的。&lt;/p&gt;
-&lt;p&gt;勇敢的人在为自己/他人对抗社会长久以来的意识形态，拿回应有的权力，是非常了不起的事情。这里的语境更多是focus在脱口秀，或许这几年脱口秀受到了太多了关注，也会有声音在说“xx不容调侃”。但我始终认为“没有什么事情是不能调侃的”。&lt;/p&gt;
-&lt;p&gt;这是一名我很喜欢的脱口秀演员的网站链接：&lt;a
-    class=&#34;link&#34;
-    href=&#34;https://www.jimmycomedy.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Jimmy O. Yang Official Website (jimmycomedy.com)&lt;/a
-&gt;
-&lt;/p&gt;
-</description></item></channel>
+        <generator>Hugo -- gohugo.io</generator></channel>
 </rss>

@@ -9,17 +9,17 @@
 
     <channel>
         <title>Yingqian&#39;s Site</title>
-        <atom:link href="%7balternate%20%7brss%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%20false%20false%200%7d%20/index.xml%20https://yingqianchen.github.io/index.xml%7d" rel="self" type="application/rss+xml" />
-        <link>https://yingqianchen.github.io/</link>
+        <atom:link href="%7balternate%20%7brss%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%20false%20false%200%7d%20/index.xml%20http://localhost:1313/index.xml%7d" rel="self" type="application/rss+xml" />
+        <link>http://localhost:1313/</link>
         <managingEditor>Ice-Hazymoon</managingEditor>
         <description>A simple, performance-first, SEO-friendly Hugo theme</description>
         <lastBuildDate>Thu, 14 Mar 2024 14:03:45 +0000</lastBuildDate>
         <language>en-us</language>
         <generator>Hugo -- gohugo.io</generator><item>
             <title>Travel Gallery</title>
-            <link>https://yingqianchen.github.io/2024/03/04/%E6%97%85%E8%A1%8C.html/</link>
+            <link>http://localhost:1313/2024/03/04/%E6%97%85%E8%A1%8C.html/</link>
             <pubDate>Mon, 04 Mar 2024 02:49:13 +0200</pubDate>
-            <guid>https://yingqianchen.github.io/2024/03/04/%E6%97%85%E8%A1%8C.html/</guid><description>&lt;div class=&#34;gallery-box&#34;&gt;
+            <guid>http://localhost:1313/2024/03/04/%E6%97%85%E8%A1%8C.html/</guid><description>&lt;div class=&#34;gallery-box&#34;&gt;
     
 
 
@@ -33,9 +33,9 @@
 
 </description></item><item>
             <title>3月2日随笔</title>
-            <link>https://yingqianchen.github.io/2024/03/02/hugo-encrypt.html/</link>
+            <link>http://localhost:1313/2024/03/02/hugo-encrypt.html/</link>
             <pubDate>Sat, 02 Mar 2024 14:03:12 +0800</pubDate>
-            <guid>https://yingqianchen.github.io/2024/03/02/hugo-encrypt.html/</guid><description>&lt;p&gt;
+            <guid>http://localhost:1313/2024/03/02/hugo-encrypt.html/</guid><description>&lt;p&gt;
 &lt;/p&gt;
 
 

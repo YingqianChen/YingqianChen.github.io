@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gallery on Yingqian&#39;s Site</title>
-    <link>https://yingqianchen.github.io/categories/gallery/</link>
+    <link>http://localhost:1313/categories/gallery/</link>
     <description>Recent content in Gallery on Yingqian&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 14 Mar 2024 14:31:56 +0800</lastBuildDate>
-    <atom:link href="https://yingqianchen.github.io/categories/gallery/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/gallery/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Travel Gallery</title>
-      <link>https://yingqianchen.github.io/2024/03/04/%E6%97%85%E8%A1%8C.html/</link>
+      <link>http://localhost:1313/2024/03/04/%E6%97%85%E8%A1%8C.html/</link>
       <pubDate>Mon, 04 Mar 2024 02:49:13 +0200</pubDate>
-      <guid>https://yingqianchen.github.io/2024/03/04/%E6%97%85%E8%A1%8C.html/</guid>
+      <guid>http://localhost:1313/2024/03/04/%E6%97%85%E8%A1%8C.html/</guid>
       <description>旅行合集</description>
     </item>
   </channel>
