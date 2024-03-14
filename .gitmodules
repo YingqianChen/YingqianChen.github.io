@@ -7,3 +7,7 @@
 [submodule "themes/themes/hugo-theme-console"]
 	path = themes/themes/hugo-theme-console
 	url = https://github.com/mrmierzejewski/hugo-theme-console.git
+[submodule "themes/hugo-theme-luna"]
+	path = themes/hugo-theme-luna
+	url = https://github.com/Ice-Hazymoon/hugo-theme-luna
+	branch = master
