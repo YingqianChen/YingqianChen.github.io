@@ -11,7 +11,7 @@
     "scope": "/",
     "start_url": "{{- "/" | relLangURL -}}",
     "name": "{{- .Site.Title | safeHTML -}}",
-    "short_name": "{{- .Site.Params.author.name -}}",
+    "short_name": "{{- .Site.Params.author.name | safeHTML -}}",
     "description": "{{- .Site.Title | safeHTML -}}",
     "icons": [
         {

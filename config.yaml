@@ -412,8 +412,8 @@ params:
       site: '@Ice_Hazymoon'
     image: 'featured.png' # in assets folder | false
 
-  author:
-    name: Ice-Hazymoo
+  # author:
+  #   name: Ice-Hazymoon
   keywords:
     - Hugo
     - Hugo Theme
