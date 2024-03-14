@@ -48,6 +48,10 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install Node.js dependencies
         run: '[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true'
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
       - name: Install NPM dependencies
         run: |
           npm install -g npm@latest # Optional: update npm to the latest version
