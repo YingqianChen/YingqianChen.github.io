@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://yingqianchen.github.io/categories/</loc>
-    <lastmod>2024-03-14T20:52:02+08:00</lastmod>
+    <lastmod>2024-03-14T22:58:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -17,8 +17,13 @@
                 href="https://yingqianchen.github.io/categories/"
                 />
   </url><url>
+    <loc>https://yingqianchen.github.io/tags/flower/</loc>
+    <lastmod>2024-03-14T22:57:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://yingqianchen.github.io/2024/03/14/flower.html/</loc>
-    <lastmod>2024-03-14T20:52:02+08:00</lastmod>
+    <lastmod>2024-03-14T22:57:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -33,7 +38,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/categories/gallery/</loc>
-    <lastmod>2024-03-14T20:52:02+08:00</lastmod>
+    <lastmod>2024-03-14T22:58:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -48,12 +53,12 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/tags/photography/</loc>
-    <lastmod>2024-03-14T20:52:02+08:00</lastmod>
+    <lastmod>2024-03-14T22:58:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://yingqianchen.github.io/posts/</loc>
-    <lastmod>2024-03-14T21:26:47+08:00</lastmod>
+    <lastmod>2024-03-18T14:21:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -68,7 +73,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/tags/</loc>
-    <lastmod>2024-03-14T21:26:47+08:00</lastmod>
+    <lastmod>2024-03-18T14:21:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -83,7 +88,7 @@
                 />
   </url><url>
     <loc>https://yingqianchen.github.io/</loc>
-    <lastmod>2024-03-14T21:26:47+08:00</lastmod>
+    <lastmod>2024-03-18T14:21:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -142,13 +147,23 @@
                 href="https://yingqianchen.github.io/about/"
                 />
   </url><url>
+    <loc>https://yingqianchen.github.io/tags/stata/</loc>
+    <lastmod>2024-03-18T14:21:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://yingqianchen.github.io/2024/03/05/typography.html/</loc>
+    <lastmod>2024-03-18T14:21:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://yingqianchen.github.io/tags/travel/</loc>
-    <lastmod>2024-03-14T17:08:40+08:00</lastmod>
+    <lastmod>2024-03-14T22:58:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://yingqianchen.github.io/2024/03/04/travel.html/</loc>
-    <lastmod>2024-03-14T17:08:40+08:00</lastmod>
+    <lastmod>2024-03-14T22:58:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link

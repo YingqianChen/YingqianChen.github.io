@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stata on Yingqian&#39;s Site</title>
+    <link>https://yingqianchen.github.io/tags/stata/</link>
+    <description>Recent content in Stata on Yingqian&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2024 14:21:52 +0800</lastBuildDate>
+    <atom:link href="https://yingqianchen.github.io/tags/stata/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stata笔记</title>
+      <link>https://yingqianchen.github.io/2024/03/05/typography.html/</link>
+      <pubDate>Tue, 05 Mar 2024 10:14:45 +0800</pubDate>
+      <guid>https://yingqianchen.github.io/2024/03/05/typography.html/</guid>
+      <description>校选课Stata课堂笔记</description>
+    </item>
+  </channel>
+</rss>
