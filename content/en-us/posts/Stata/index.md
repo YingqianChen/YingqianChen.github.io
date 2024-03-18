@@ -1,7 +1,7 @@
 ---
 title: "Stata笔记"
 date: 2024-03-05T10:14:45+08:00
-slug: typography
+slug: Stata
 summary: "校选课Stata课堂笔记"
 draft: false
 toc: true
