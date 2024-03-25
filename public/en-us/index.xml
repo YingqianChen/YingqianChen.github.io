@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>En-Uses on Yingqian&#39;s Site</title>
+    <link>http://localhost:1313/en-us/</link>
+    <description>Recent content in En-Uses on Yingqian&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 18 Mar 2024 14:31:20 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/en-us/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>花</title>
+      <link>http://localhost:1313/en-us/posts/%E8%8A%B1/</link>
+      <pubDate>Thu, 14 Mar 2024 17:05:13 +0800</pubDate>
+      <guid>http://localhost:1313/en-us/posts/%E8%8A%B1/</guid>
+      <description>花的集合</description>
+    </item>
+    <item>
+      <title>花</title>
+      <link>http://localhost:1313/en-us/posts/%E8%8A%B1/</link>
+      <pubDate>Thu, 14 Mar 2024 17:05:13 +0800</pubDate>
+      <guid>http://localhost:1313/en-us/posts/%E8%8A%B1/</guid>
+      <description>花的集合</description>
+    </item>
+    <item>
+      <title>Stata笔记</title>
+      <link>http://localhost:1313/en-us/posts/stata/</link>
+      <pubDate>Tue, 05 Mar 2024 10:14:45 +0800</pubDate>
+      <guid>http://localhost:1313/en-us/posts/stata/</guid>
+      <description>校选课Stata课堂笔记</description>
+    </item>
+    <item>
+      <title>旅行相册</title>
+      <link>http://localhost:1313/en-us/posts/%E6%97%85%E8%A1%8C/</link>
+      <pubDate>Mon, 04 Mar 2024 02:49:13 +0800</pubDate>
+      <guid>http://localhost:1313/en-us/posts/%E6%97%85%E8%A1%8C/</guid>
+      <description>&#xD;海南&#xD;泉州&#xD;汕头&#xD;汕头&#xD;汕头&#xD;</description>
+    </item>
+    <item>
+      <title>3月2日随笔</title>
+      <link>http://localhost:1313/en-us/posts/3%E6%9C%882%E6%97%A5%E9%9A%8F%E7%AC%94/</link>
+      <pubDate>Sat, 02 Mar 2024 14:03:12 +0800</pubDate>
+      <guid>http://localhost:1313/en-us/posts/3%E6%9C%882%E6%97%A5%E9%9A%8F%E7%AC%94/</guid>
+      <description>想到哪写到哪</description>
+    </item>
+    <item>
+      <title>友情链接</title>
+      <link>http://localhost:1313/en-us/links/</link>
+      <pubDate>Mon, 23 Aug 2021 15:26:35 +0800</pubDate>
+      <guid>http://localhost:1313/en-us/links/</guid>
+      <description>&#xD;常用网站&#xD;GitHub&#xD;some desc text...&#xD;Douban&#xD;some desc text...&#xD;YouTube&#xD;some desc text...&#xD;Sspai&#xD;some desc text...&#xD;Translate&#xD;some desc text...&#xD;Tieba&#xD;some desc text...&#xD;Zhihu&#xD;some desc text...&#xD;</description>
+    </item>
+  </channel>
+</rss>

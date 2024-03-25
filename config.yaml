@@ -280,7 +280,7 @@ params:
 
   # 自动切换夜间模式（使用设备设置）
   # Automatic switching of night mode (using device settings)
-  autoDarkMode: false
+  autoDarkMode: true
 
   # 文章分享功能
   share:

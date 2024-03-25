@@ -13,9 +13,63 @@
         <link>https://yingqianchen.github.io/</link>
         <managingEditor></managingEditor>
         <description>A simple, performance-first, SEO-friendly Hugo theme</description>
-        <lastBuildDate>Thu, 14 Mar 2024 17:05:13 +0800</lastBuildDate>
+        <lastBuildDate>Sun, 24 Mar 2024 21:01:13 +0800</lastBuildDate>
         <language>en-us</language>
         <generator>Hugo -- gohugo.io</generator><item>
+            <title>Bird Gallery</title>
+            <link>https://yingqianchen.github.io/2024/03/24/bird.html/</link>
+            <pubDate>Sun, 24 Mar 2024 21:01:13 +0800</pubDate>
+            <guid>https://yingqianchen.github.io/2024/03/24/bird.html/</guid><description>&lt;div class=&#34;gallery-box&#34;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;/div&gt;
+
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;spring&#34;
+    &gt;Spring&lt;a href=&#34;#spring&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;摄于南普陀寺。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;gallery-grid m-3 columns-2 gap-3 sm:columns-3 md:m-4 md:columns-4 md:gap-4&#34;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;/div&gt;
+
+</description></item><item>
             <title>Flower Gallery</title>
             <link>https://yingqianchen.github.io/2024/03/14/flower.html/</link>
             <pubDate>Thu, 14 Mar 2024 17:05:13 +0800</pubDate>
@@ -37,13 +91,15 @@
 
 
 
-&lt;h2 class=&#34;group &#34; id=&#34;grid-gallery&#34;
-    &gt;Grid Gallery&lt;a href=&#34;#grid-gallery&#34;
+&lt;h2 class=&#34;group &#34; id=&#34;spring&#34;
+    &gt;Spring&lt;a href=&#34;#spring&#34;
         &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
 &gt;&lt;/h2&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;第一次旋焦尝试，摄于狐尾山公园。&lt;/p&gt;
+&lt;p&gt;第一次旋焦尝试，摄于狐尾山公园。
+樱花，摄于狐尾山公园。
+路边花坛，摄于筼筜湖畔。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class=&#34;gallery-grid m-3 columns-2 gap-3 sm:columns-3 md:m-4 md:columns-4 md:gap-4&#34;&gt;
     
@@ -65,9 +121,6 @@
 
 &lt;/div&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;樱花，摄于狐尾山公园。&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;div class=&#34;gallery-grid m-3 columns-2 gap-3 sm:columns-3 md:m-4 md:columns-4 md:gap-4&#34;&gt;
     
 
@@ -84,9 +137,6 @@
 
 &lt;/div&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;路边花坛，摄于筼筜湖畔&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;div class=&#34;gallery-grid m-3 columns-2 gap-3 sm:columns-3 md:m-4 md:columns-4 md:gap-4&#34;&gt;
     
 
@@ -95,9 +145,9 @@
 
 </description></item><item>
             <title>Stata笔记</title>
-            <link>https://yingqianchen.github.io/2024/03/05/typography.html/</link>
+            <link>https://yingqianchen.github.io/2024/03/05/stata.html/</link>
             <pubDate>Tue, 05 Mar 2024 10:14:45 +0800</pubDate>
-            <guid>https://yingqianchen.github.io/2024/03/05/typography.html/</guid><description>
+            <guid>https://yingqianchen.github.io/2024/03/05/stata.html/</guid><description>
 
 &lt;h2 class=&#34;group &#34; id=&#34;ch1-绪论&#34;
     &gt;CH1 绪论&lt;a href=&#34;#ch1-%e7%bb%aa%e8%ae%ba&#34;
@@ -676,9 +726,9 @@
 
 </description></item><item>
             <title>3月2日随笔</title>
-            <link>https://yingqianchen.github.io/2024/03/02/typography.html/</link>
+            <link>https://yingqianchen.github.io/2024/03/02/3%E6%9C%882%E6%97%A5%E9%9A%8F%E7%AC%94.html/</link>
             <pubDate>Sat, 02 Mar 2024 14:03:12 +0800</pubDate>
-            <guid>https://yingqianchen.github.io/2024/03/02/typography.html/</guid><description>
+            <guid>https://yingqianchen.github.io/2024/03/02/3%E6%9C%882%E6%97%A5%E9%9A%8F%E7%AC%94.html/</guid><description>
 
 &lt;h2 class=&#34;group &#34; id=&#34;播客&#34;
     &gt;播客&lt;a href=&#34;#%e6%92%ad%e5%ae%a2&#34;

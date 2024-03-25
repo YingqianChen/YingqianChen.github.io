@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Yingqian&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Mar 2024 14:21:52 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 Mar 2024 21:18:30 +0800</lastBuildDate>
     <atom:link href="https://yingqianchen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bird Gallery</title>
+      <link>https://yingqianchen.github.io/2024/03/24/bird.html/</link>
+      <pubDate>Sun, 24 Mar 2024 21:01:13 +0800</pubDate>
+      <guid>https://yingqianchen.github.io/2024/03/24/bird.html/</guid>
+      <description>Some photos of flowers</description>
+    </item>
     <item>
       <title>Flower Gallery</title>
       <link>https://yingqianchen.github.io/2024/03/14/flower.html/</link>
@@ -17,9 +24,9 @@
     </item>
     <item>
       <title>Stata笔记</title>
-      <link>https://yingqianchen.github.io/2024/03/05/typography.html/</link>
+      <link>https://yingqianchen.github.io/2024/03/05/stata.html/</link>
       <pubDate>Tue, 05 Mar 2024 10:14:45 +0800</pubDate>
-      <guid>https://yingqianchen.github.io/2024/03/05/typography.html/</guid>
+      <guid>https://yingqianchen.github.io/2024/03/05/stata.html/</guid>
       <description>校选课Stata课堂笔记</description>
     </item>
     <item>
@@ -31,9 +38,9 @@
     </item>
     <item>
       <title>3月2日随笔</title>
-      <link>https://yingqianchen.github.io/2024/03/02/typography.html/</link>
+      <link>https://yingqianchen.github.io/2024/03/02/3%E6%9C%882%E6%97%A5%E9%9A%8F%E7%AC%94.html/</link>
       <pubDate>Sat, 02 Mar 2024 14:03:12 +0800</pubDate>
-      <guid>https://yingqianchen.github.io/2024/03/02/typography.html/</guid>
+      <guid>https://yingqianchen.github.io/2024/03/02/3%E6%9C%882%E6%97%A5%E9%9A%8F%E7%AC%94.html/</guid>
       <description>想到哪写到哪</description>
     </item>
   </channel>
