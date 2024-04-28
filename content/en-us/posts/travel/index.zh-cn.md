@@ -1,7 +1,7 @@
 ---
 title: 旅行相册
 date: 2024-03-04T02:49:13+08:00
-slug: 旅行
+slug: travel
 featured_image: hainan1.jpg
 summary: 
 layout: gallery

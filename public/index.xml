@@ -13,9 +13,87 @@
         <link>https://yingqianchen.github.io/</link>
         <managingEditor></managingEditor>
         <description>A simple, performance-first, SEO-friendly Hugo theme</description>
-        <lastBuildDate>Mon, 25 Mar 2024 21:34:37 +0800</lastBuildDate>
+        <lastBuildDate>Sun, 28 Apr 2024 13:19:20 +0800</lastBuildDate>
         <language>en-us</language>
         <generator>Hugo -- gohugo.io</generator><item>
+            <title>强化学习笔记</title>
+            <link>https://yingqianchen.github.io/2024/04/28/rl.html/</link>
+            <pubDate>Sun, 28 Apr 2024 13:19:20 +0800</pubDate>
+            <guid>https://yingqianchen.github.io/2024/04/28/rl.html/</guid><description>
+
+&lt;h2 class=&#34;group &#34; id=&#34;马尔科夫决策过程&#34;
+    &gt;马尔科夫决策过程&lt;a href=&#34;#%e9%a9%ac%e5%b0%94%e7%a7%91%e5%a4%ab%e5%86%b3%e7%ad%96%e8%bf%87%e7%a8%8b&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;马尔科夫性&#34;
+    &gt;马尔科夫性&lt;a href=&#34;#%e9%a9%ac%e5%b0%94%e7%a7%91%e5%a4%ab%e6%80%a7&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;定义：系统的下一个状态$s_{t+1}$仅与当前状态$s_t$有关，与之前的状态无关。&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;马尔科夫过程&#34;
+    &gt;马尔科夫过程&lt;a href=&#34;#%e9%a9%ac%e5%b0%94%e7%a7%91%e5%a4%ab%e8%bf%87%e7%a8%8b&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;定义：马尔科夫过程是一个二元组(S, P)，且满足，S是有限状态集合，P是状态转移概率。过程中不存在动作和奖励，考虑动作（策略）和回报的马尔科夫过程称为马尔科夫决策过程。&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;马尔科夫决策过程-1&#34;
+    &gt;马尔科夫决策过程&lt;a href=&#34;#%e9%a9%ac%e5%b0%94%e7%a7%91%e5%a4%ab%e5%86%b3%e7%ad%96%e8%bf%87%e7%a8%8b-1&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;定义：马尔科夫决策过程由元组（$S$, $A$, $P$, $R$, $\gamma$）描述，其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$S$为有限的状态集&lt;/li&gt;
+&lt;li&gt;$A$为有限的动作集&lt;/li&gt;
+&lt;li&gt;$P$为状态转移概率&lt;/li&gt;
+&lt;li&gt;$R$为回报函数&lt;/li&gt;
+&lt;li&gt;$\gamma$为折扣因子，用于计算累计回报&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;强化学习的目标是给定⼀个马尔科夫决策过程，寻找最优策略。所谓策略是指状态到动作的映射，策略常⽤符号$\pi$表⽰，它是指给定状态$s$时，动作集上的⼀个分布，即
+$$\pi(a \mid s)=p\left[A_t=a \mid S_t=s\right]$$&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;状态值函数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当智能体采用策略$\pi$时，累积回报（$G$）在状态$s$处的期望值定义为状态值函数：
+$$
+v_\pi(s)
+= E_\pi \left[ G_t \mid S_t=s \right ]
+= E_\pi\left[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \mid S_t=s\right]
+$$&lt;/p&gt;
+&lt;p&gt;状态行为值函数：&lt;/p&gt;
+&lt;p&gt;$$
+q_\pi (s, a) = E_\pi \left[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \mid S_t=s, A_t=a \right]
+$$&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;状态值函数与状态行为值函数的贝尔曼方程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;\begin{align}
+v_\pi(s) &amp;amp;= E_\pi \left[ G_t \mid S_t=s \right ] \\
+&amp;amp;= E_\pi \left [ R_{t+1} + \gamma R_{t+2} + &amp;hellip; \mid S_t = s \right] \nonumber \\
+&amp;amp;= E_\pi \left [ R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + &amp;hellip;) \mid S_t = s \right] \notag \\
+&amp;amp;= E_\pi \left [ R_{t+1} + \gamma G_{t+1} \mid S_t = s \right] \nonumber \\
+&amp;amp;= E_\pi \left [ R_{t+1} + \gamma v_\pi(S_{t+1}) \mid S_t = s \right] \nonumber \\
+\end{align}
+其中，
+$$
+\begin{align}
+V(S_t) &amp;amp;= E_{s_t, s_{t+1}, &amp;hellip;} (R(t+1) + \gamma G(S_{t+1})) \\
+&amp;amp;= E_{s_t} (R(t+1) + \gamma E_{s_{t+1}, &amp;hellip;}(G(S_{t+1})))
+\nonumber \\
+&amp;amp;= E_{s_t} (R(t+1) + \gamma V(S_{t+1}))
+\nonumber \\
+&amp;amp;= E (R(t+1) + \gamma E_{s_{t+1}, &amp;hellip;}(G(S_{t+1}))) \nonumber \\
+\end{align}
+$$&lt;/p&gt;
+</description></item><item>
             <title>3月25日随笔</title>
             <link>https://yingqianchen.github.io/2024/03/25/3%E6%9C%8825%E6%97%A5%E9%9A%8F%E7%AC%94.html/</link>
             <pubDate>Mon, 25 Mar 2024 21:34:37 +0800</pubDate>
