@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('projects', ({ data }) => !data.draft);
+const projects = all
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+---
+
+<Base>
+  <section class="mx-auto w-full max-w-prose px-6 pt-24 pb-12">
+    <h1 class="text-4xl font-semibold tracking-tight">Yingqian Chen</h1>
+    <p class="mt-4 text-lg text-ink-muted dark:text-ink-muted-dark">
+      I build small, careful software &mdash; LLM-assisted tools, research-y web apps,
+      and the occasional toy. This is where I write about the ones worth keeping.
+    </p>
+  </section>
+
+  <section class="mx-auto w-full max-w-prose px-6 pb-24">
+    <div class="mb-6 flex items-baseline justify-between border-b border-rule dark:border-rule-dark pb-3">
+      <h2 class="font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
+        Recent projects
+      </h2>
+      {projects.length > 0 && (
+        <a href="/projects/" class="no-underline hover:underline font-mono text-meta uppercase">
+          all &rarr;
+        </a>
+      )}
+    </div>
+
+    {projects.length === 0 ? (
+      <p class="py-12 text-center font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
+        No posts yet &mdash; run <code>/new-post</code> to draft the first one.
+      </p>
+    ) : (
+      projects.map((entry) => <ProjectCard entry={entry} />)
+    )}
+  </section>
+</Base>

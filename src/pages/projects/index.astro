@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('projects', ({ data }) => !data.draft);
+const projects = all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title="Projects" description="All projects by Yingqian Chen.">
+  <section class="mx-auto w-full max-w-prose px-6 pt-20 pb-24">
+    <h1 class="mb-1 text-3xl font-semibold tracking-tight">Projects</h1>
+    <p class="mb-10 font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
+      {projects.length} {projects.length === 1 ? 'entry' : 'entries'}
+    </p>
+
+    {projects.length === 0 ? (
+      <p class="py-12 text-center font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
+        Nothing here yet.
+      </p>
+    ) : (
+      projects.map((entry) => <ProjectCard entry={entry} />)
+    )}
+  </section>
+</Base>
