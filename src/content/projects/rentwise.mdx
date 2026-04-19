@@ -1,0 +1,267 @@
+---
+title: "RentWise"
+summary: "A Hong Kong rental candidate-pool workspace. Multimodal ingestion, three-layer LLM assessment, a tool-use commute agent with anti-hallucination gates, and a field-level eval harness."
+date: 2026-04-15
+tech:
+  - Python
+  - FastAPI
+  - LangGraph
+  - Groq
+  - PaddleOCR
+  - BM25
+  - Next.js
+  - PostgreSQL
+repo: "https://github.com/YingqianChen/RentWise-dev"
+status: shipped
+draft: false
+---
+
+## Problem
+
+Hong Kong renters don't lack listings — they lack a way to reason about
+the 3–5 candidates already on their shortlist. What's negotiable? Which
+clause is a red flag? How long is the commute from each, really?
+
+RentWise is a **candidate-pool decision workspace**: you import listings
+(text, URLs, screenshots), and the app extracts facts, flags risky
+clauses with ordinance citations, estimates door-to-door commute, groups
+candidates for comparison, and explains what to verify next.
+
+Built with **[CHEN Yidong](#)** (personal site pending). My work
+concentrated on the LLM subsystems — ingestion, assessment pipeline,
+tool-use agent, RAG, and the eval harness that keeps them honest.
+
+<figure>
+  <img src="/covers/rentwise/landing.png" alt="RentWise landing page showing the hero and four feature cards: Import from any listing source, AI-assessed candidate pool, Commute evidence for Hong Kong, What to verify next." />
+  <figcaption>Landing — rent-wise-dev.vercel.app</figcaption>
+</figure>
+
+## System at a glance
+
+```
+┌───────────────────────────────────────────────────────────────────────┐
+│                              Frontend                                 │
+│          Next.js 14 · Project dashboard · Candidate detail            │
+│                Compare (grouped)  ·  Investigation queue              │
+└────────────────────────────┬──────────────────────────────────────────┘
+                             │  REST / JWT
+                             ▼
+┌───────────────────────────────────────────────────────────────────────┐
+│                     FastAPI  +  Postgres (Alembic)                    │
+│                                                                       │
+│   Ingestion ─────────▶ Assessment ─────────▶ Compare                  │
+│     OCR svc             cost  (rules)         grouping                │
+│     LLM facts           clause (LLM+RAG)      LLM briefing            │
+│     BG state machine    candidate (LLM)       deterministic fallback  │
+│                                                                       │
+│                  Commute (per candidate, on demand)                   │
+│                  LangGraph tool-use agent  ·  HK bbox gate            │
+│                                                                       │
+│          Eval harness ── pytest.mark.eval ── field-level floors       │
+└───────────────────────────────────────────────────────────────────────┘
+```
+
+<figure>
+  <img src="/covers/rentwise/dashboard.png" alt="Project dashboard showing status counters, budget cap, commute target, Agent advice banner, Suggested compare set, all-candidates list with Sha Tin Unit and Mong Kok Studio, and a right rail with priority queue plus investigation checklist." />
+  <figcaption>Project dashboard — agent advice, priority queue, shared investigation checklist, and the action-oriented candidate list</figcaption>
+</figure>
+
+## Ingestion: multimodal OCR → LLM facts
+
+Listings arrive as screenshots, photos, chat pastes, PDFs, or plain
+text. A provider-switchable OCR service normalises everything into one
+`combined_text` blob that the LLM extractor turns into structured JSON
+(rent, deposit, area, dates, clauses).
+
+- **Engines**: `paddleocr` default (CJK thin strokes like 釐 / 傢俬 /
+  按揭), `rapidocr_onnxruntime` for low-memory containers, `mistral`
+  cloud as a debug oracle. A single lock-guarded `_shared_engines`
+  dict reuses each engine across requests; FastAPI `lifespan` warms
+  them, so the first real request doesn't pay the ~3 s load.
+- **`LOW_MEMORY_MODE`** releases the engine after each request for a
+  512 MB Render container.
+- **Async pipeline**: import returns `202` immediately and a DB state
+  machine — `queued → running_ocr → extracting → scoring → completed`
+  (or `failed` with an error blob) — the frontend polls. Chose
+  `FastAPI.BackgroundTasks` + DB state over Celery because a full
+  broker/worker rig is overkill for this scale; restart resumability
+  lives in the DB, not in memory.
+
+## Assessment: three layers, not one LLM call
+
+Every candidate is evaluated in three independent passes before the UI
+ever shows a verdict:
+
+| Layer | Source of truth | LLM? |
+|---|---|---|
+| `CostAssessment` | rent / management / rates / deposit / agent fee / budget fit | no — deterministic rules |
+| `ClauseAssessment` | repair duty, lease term, move-in conflicts | **yes**, narrow fields, cites ordinance via RAG |
+| `CandidateAssessment` | top-level recommendation + blockers + next action | **yes**, synthesises the two above + user preferences |
+
+Why not one LLM call? Three reasons: **auditability** — demos need to
+show *why* a candidate is `needs_info`, pointing to a specific cost or
+clause field; **replaceability** — cost is pure rules, clause is
+constrained LLM, candidate is freeform LLM, so each layer picks its
+own technology; **regression isolation** — a clause-prompt tweak
+cannot poison cost metrics, which is what lets the eval harness
+enforce floors *per field*.
+
+**Ordinance RAG feeds the clause layer.** When `clause_risk_flag !=
+"none"`, the UI must show the actual tenancy-guide text — not an LLM
+paraphrase — with page numbers. The source
+`AGuideToTenancy_ch.pdf` is a scanned Chinese PDF: rendered at 2× with
+PyMuPDF, OCR'd with `rapidocr_onnxruntime`, chunked at ~400 chars with
+80-char overlap, indexed with `BM25Okapi` + `jieba` (22 chunks, ~10 KB
+committed to git — zero cloud dependency). At query time, the risk
+flag maps to a seed query (`repair_tenant_heavy →
+"維修 責任 業主 租客 損壞 維護"`), BM25 returns top-5, an LLM rerank
+picks top-2. If the rerank times out or returns non-JSON, the fallback
+is raw BM25 top-2 — RAG is a bonus, not a dependency.
+
+**Landlord/agent outreach drafts** are a parallel LLM output on the
+same candidate: given extracted facts plus the current blockers, the
+service drafts a concrete question list the user can paste into
+WhatsApp. Same pattern — LLM output with a deterministic template
+fallback.
+
+**Candidate status vs `user_decision` are separate columns.** AI writes
+the status (`new / needs_info / follow_up / high_risk_pending /
+recommended_reject / shortlisted`); the user writes their own decision.
+A user can keep a `recommended_reject` candidate shortlisted (they
+know something the model doesn't), and a reassessment won't stomp it.
+
+<figure>
+  <img src="/covers/rentwise/candidate-detail.png" alt="Candidate detail page for Sha Tin Unit showing the What-matters-now decision snapshot, Cost/Clause/Commute/Fit tabs with Cost selected, a Hidden cost risk chip, missing cost fields, outreach draft button, evidence section, and a right rail with Decide actions, Key facts, Open blockers, and Compare context." />
+  <figcaption>Candidate detail — decision snapshot on the left, the three assessment layers in tabs, outreach draft on demand, evidence kept collapsed until audited</figcaption>
+</figure>
+
+## Commute: LLM tool-use agent
+
+The original geocoder was a hard-coded ladder (ALS → Amap geocode →
+Amap POI). It treated every candidate the same, even when the inputs
+obviously preferred a different tool. I replaced the ladder with a
+LangGraph two-node agent that picks a tool per candidate.
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│  candidate_facts                                                   │
+│    (address_text · building · nearest_station · district)          │
+│          │                                                         │
+│          ▼                                                         │
+│   ┌────────────┐  tool_call    ┌──────────────────────────────┐    │
+│   │ plan (LLM) │──────────────▶│  execute one of:             │    │
+│   │            │               │    als_geocode               │    │
+│   │            │               │    amap_geocode              │    │
+│   │            │◀──────────────│    amap_poi_search           │    │
+│   │            │  observation  │    mtr_station_lookup        │    │
+│   └─────┬──────┘               │    finish / give_up          │    │
+│         │                      └──────────────────────────────┘    │
+│         │ finish · give_up · MAX_STEPS                             │
+│         ▼                                                          │
+│       END  →  resolved_coords  |  give_up_reason                   │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+Three gates prevent hallucination:
+
+```python
+# gate 1 — HK bounding box, enforced at the observation layer
+def _observation(tool_name, coords, meta):
+    if not in_hk(coords):
+        return {"accepted": False, "reason": "out_of_hk_bbox"}
+    return {"accepted": True, "coords": coords, ...}
+
+# gate 2 — finish() must echo a coord the agent actually saw
+def _coords_from_observations(history, claimed):
+    return any(_close(claimed, obs.coords) for obs in history)  # 1e-4
+
+# gate 3 — MAX_STEPS cap
+```
+
+The bbox is a **whole-system invariant**, not a per-call check — one
+`Shenzhen` coord ever making it to routing produces an 80-minute
+cross-border estimate that silently looks plausible. Pushing the gate
+to the observation layer means the LLM never sees an out-of-bbox
+coord, so it cannot cite one in `finish()`. The deterministic ladder
+stays behind `COMMUTE_AGENT_ENABLED=false` as a control for evals.
+
+**The Sha Tin bug.** A candidate with
+`nearest_station = "Sha Tin MTR station"` kept rendering as
+"Tai Wai → Admiralty". ALS was returning the nearby shopping mall,
+whose coordinates Amap routing snapped to the wrong station. Fix: a
+build-time-validated lookup table (`mtr_stations.json`, 95
+platform-centre coords). A build script validates each entry against
+Amap POI `types=150500` with a 400 m drift ceiling. Runtime is 300–
+800 ms faster than any API lookup, the answer is unique (no mall /
+exit drift), and the prompt forbids passing `district` into the tool
+because "Sha Tin" is also a district name — conflating them is worse
+than no lookup at all.
+
+<figure>
+  <img src="/covers/rentwise/candidate-commute.png" alt="Commute tab for Sha Tin Unit showing 44 minutes to Central Office, with resolved route 大围 → 金钟 and per-leg chips: Walk 13 min, 东铁线 (罗湖—金钟) 24 min, Walk 7 min." />
+  <figcaption>Commute tab — resolved origin station 大围 (Tai Wai) and per-leg transit chips, produced by the agent after the lookup-table fix landed</figcaption>
+</figure>
+
+## Compare: grouping, not ranking
+
+When the user marks 2+ candidates for comparison, the backend does
+**not** produce a score. A single number hides the tradeoffs people
+actually feel ("A is cheaper but the deposit is huge; B is pricier
+but the tenancy terms are clean"). Instead, candidates are sorted into
+four buckets: *best current option*, *viable alternatives*, *not ready
+for fair comparison*, *likely drop*.
+
+Per-card text is then written by a second LLM agent — the
+**comparison briefing** — with five fixed fields: current take, why
+now, what could change, today's move, confidence note. The service
+ships with a deterministic fallback that writes the same shape from
+rule output when the LLM is unavailable or returns malformed JSON, so
+the compare page never dead-ends.
+
+<figure>
+  <img src="/covers/rentwise/compare.png" alt="Compare workspace showing the agent briefing for two candidates with Current take, Why now, What could change, and Today's move fields; Mong Kok Studio in the Best current option group; Sha Tin Unit in Viable alternatives; and a right panel with Recommended next actions including questions to ask." />
+  <figcaption>Compare workspace — agent briefing on top, grouping instead of ranking below, and per-candidate next actions on the right</figcaption>
+</figure>
+
+## Evals: field-level floors
+
+Every LLM pipeline passes unit tests on "runs without crashing". The
+eval harness (`backend/tests/evals/`) is gated by
+`pytest.mark.eval` and layered by cost:
+
+| Test | Golden set | Guards | Needs |
+|---|---|---|---|
+| `test_extraction_eval.py` | `golden_listings.jsonl` | per-field extraction accuracy | `GROQ_API_KEY` |
+| `test_commute_agent_eval.py` | `golden_commutes.jsonl` | tool choice + origin match | Groq + Amap |
+| `test_tenancy_rag_eval.py` | 8 hand-written queries | BM25 page recall | none (runs on CI) |
+
+Each test enforces a `_FLOORS` table — **red lines, not targets**:
+
+```python
+_FLOORS = {
+    "monthly_rent": 0.70,   # must-have, well-formatted
+    "district":     0.70,
+    "deposit":      0.50,   # multi-format, more forgiving
+    "lease_term":   0.50,
+}
+_OVERALL_FLOOR = 0.60
+```
+
+Crossing a floor means a real regression — a prompt change, a model
+swap, a new fixture surfaced a weakness. JSON reports land in
+`tests/evals/reports/` and the commit-to-commit diff is the drift
+curve. The RAG eval has no external dependency, so it runs on every
+push; the LLM-dependent ones are opt-in.
+
+## Outcome
+
+Deployed on Render (FastAPI + Postgres) with the frontend on Vercel.
+Across the LLM subsystems: the tool-use agent cuts wrong-station
+resolutions against the old ladder on the golden set; OCR + extraction
+ingest mixed text/image pastes including CJK screenshots with no
+cloud vision step; the RAG surfaces two ordinance paragraphs with page
+numbers under every flagged clause; the compare briefing gracefully
+falls back to rule-based text when the LLM is down. Next: promoting
+the compare briefing to a proper LangGraph agent (scaffolding is
+already there), and adding refresh tokens on top of the current
+7-day JWT.

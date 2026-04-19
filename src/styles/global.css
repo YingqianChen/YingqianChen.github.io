@@ -112,6 +112,21 @@
   .prose-body img {
     @apply my-6 w-full;
   }
+  .prose-body figure {
+    @apply my-10;
+  }
+  .prose-body figure img {
+    @apply my-0 w-full border;
+    border-color: theme('colors.rule');
+  }
+  @media (prefers-color-scheme: dark) {
+    .prose-body figure img {
+      border-color: theme('colors.rule-dark');
+    }
+  }
+  .prose-body figure figcaption {
+    @apply mt-3 font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark;
+  }
   .prose-body table {
     @apply my-6 w-full border-collapse text-sm;
   }
