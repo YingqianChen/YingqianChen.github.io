@@ -15,9 +15,9 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 ---
 
-<Project entry={entry}>
+<Project entry={entry} headings={headings}>
   <Content />
 </Project>

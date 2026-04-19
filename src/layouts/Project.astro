@@ -1,14 +1,18 @@
 ---
 import Base from './Base.astro';
 import TechTag from '../components/TechTag.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
 
 interface Props {
   entry: CollectionEntry<'projects'>;
+  headings: MarkdownHeading[];
 }
 
-const { entry } = Astro.props;
+const { entry, headings } = Astro.props;
 const { data } = entry;
+const hasToc = headings.some((h) => h.depth === 2 || h.depth === 3);
 
 const dateFmt = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -23,32 +27,55 @@ const statusLabel: Record<typeof data.status, string> = {
 ---
 
 <Base title={data.title} description={data.summary} ogImage={data.cover}>
-  <article class="mx-auto w-full max-w-prose px-6 pt-16 pb-8">
-    <header class="mb-10">
-      <p class="mb-2 font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
-        {dateFmt.format(data.date)} &middot; {statusLabel[data.status]}
-      </p>
-      <h1 class="text-3xl font-semibold tracking-tight">{data.title}</h1>
-      <p class="mt-3 text-lg text-ink-muted dark:text-ink-muted-dark">{data.summary}</p>
+  <div class="mx-auto w-full max-w-[60rem] px-6 pt-16 pb-8">
+    <article class={hasToc ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_11rem] lg:gap-12' : ''}>
+      <div class="min-w-0">
+        <header class="mb-10">
+          <p class="mb-2 font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
+            {dateFmt.format(data.date)} &middot; {statusLabel[data.status]}
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight">{data.title}</h1>
+          <p class="mt-3 text-lg text-ink-muted dark:text-ink-muted-dark">{data.summary}</p>
 
-      {data.tech.length > 0 && (
-        <div class="mt-5 flex flex-wrap gap-x-3 gap-y-1">
-          {data.tech.map((t) => <TechTag label={t} />)}
+          {data.tech.length > 0 && (
+            <div class="mt-5 flex flex-wrap gap-x-3 gap-y-1">
+              {data.tech.map((t) => <TechTag label={t} />)}
+            </div>
+          )}
+
+          {(data.repo || data.demo) && (
+            <div class="mt-5 flex gap-5 font-mono text-meta uppercase">
+              {data.repo && <a href={data.repo} class="no-underline hover:underline">repo &rarr;</a>}
+              {data.demo && <a href={data.demo} class="no-underline hover:underline">demo &rarr;</a>}
+            </div>
+          )}
+        </header>
+
+        {hasToc && (
+          <details class="mb-10 border-l-2 border-rule dark:border-rule-dark pl-4 lg:hidden">
+            <summary class="cursor-pointer font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark">
+              Contents
+            </summary>
+            <div class="mt-3">
+              <TableOfContents headings={headings} />
+            </div>
+          </details>
+        )}
+
+        <hr class="mb-10" />
+
+        <div class="prose-body">
+          <slot />
         </div>
+      </div>
+
+      {hasToc && (
+        <aside class="hidden lg:block">
+          <div class="sticky top-12">
+            <TableOfContents headings={headings} />
+          </div>
+        </aside>
       )}
-
-      {(data.repo || data.demo) && (
-        <div class="mt-5 flex gap-5 font-mono text-meta uppercase">
-          {data.repo && <a href={data.repo} class="no-underline hover:underline">repo &rarr;</a>}
-          {data.demo && <a href={data.demo} class="no-underline hover:underline">demo &rarr;</a>}
-        </div>
-      )}
-    </header>
-
-    <hr class="mb-10" />
-
-    <div class="prose-body">
-      <slot />
-    </div>
-  </article>
+    </article>
+  </div>
 </Base>

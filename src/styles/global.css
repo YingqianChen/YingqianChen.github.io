@@ -14,6 +14,15 @@
     text-rendering: optimizeLegibility;
     background: theme('colors.paper');
     color: theme('colors.ink');
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  .prose-body :where(h2, h3) {
+    scroll-margin-top: 2rem;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -136,5 +145,34 @@
   }
   .prose-body th {
     @apply font-semibold;
+  }
+
+  .toc-label {
+    @apply mb-3 font-mono text-meta uppercase text-ink-muted dark:text-ink-muted-dark;
+  }
+  .toc-list {
+    @apply border-l border-rule dark:border-rule-dark;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .toc-item {
+    margin: 0;
+  }
+  .toc-item > a {
+    @apply block pl-4 py-1 text-sm leading-snug no-underline text-ink-muted dark:text-ink-muted-dark;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .toc-item > a:hover {
+    @apply text-ink dark:text-ink-dark;
+  }
+  .toc-item-h3 > a {
+    @apply pl-7 text-xs;
+  }
+  .toc-item > a.is-active {
+    @apply text-ink dark:text-ink-dark;
+    border-left-color: theme('colors.accent');
   }
 }

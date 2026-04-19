@@ -1,0 +1,71 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{toc.length > 0 && (
+  <nav class="toc" aria-label="Table of contents">
+    <p class="toc-label">Contents</p>
+    <ul class="toc-list">
+      {toc.map((h) => (
+        <li class:list={['toc-item', h.depth === 3 && 'toc-item-h3']}>
+          <a href={`#${h.slug}`} data-heading={h.slug}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  function setupToc() {
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('.toc a[data-heading]')
+    );
+    if (links.length === 0) return;
+
+    const headings = links
+      .map((a) => document.getElementById(a.dataset.heading!))
+      .filter((el): el is HTMLElement => el !== null);
+    if (headings.length === 0) return;
+
+    const setActive = (id: string | null) => {
+      links.forEach((a) =>
+        a.classList.toggle('is-active', a.dataset.heading === id)
+      );
+    };
+
+    const updateActive = () => {
+      // Active = last heading whose top is above 25% viewport height.
+      const anchor = window.innerHeight * 0.25;
+      let active: string | null = headings[0]?.id ?? null;
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top <= anchor) active = h.id;
+        else break;
+      }
+      setActive(active);
+    };
+
+    // Use IntersectionObserver as a cheap change-detector, then
+    // re-run the document-order calculation. Avoids the "two headings
+    // both intersecting" flicker pure IO gets wrong.
+    const io = new IntersectionObserver(updateActive, {
+      rootMargin: '0px 0px -70% 0px',
+      threshold: [0, 1],
+    });
+    headings.forEach((h) => io.observe(h));
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupToc);
+  } else {
+    setupToc();
+  }
+</script>
