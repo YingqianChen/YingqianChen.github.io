@@ -1,0 +1,91 @@
+---
+title: "Kickstarter Campaign Performance Analysis"
+summary: "An interactive analysis of funding goals, backer support and regional differences across 197,675 projects, with an in-depth comparison of Hong Kong campaigns."
+date: 2026-09-20
+tech:
+  - R
+  - Tableau
+  - Data visualization
+  - HTML / SVG
+status: shipped
+draft: false
+---
+
+import KickstarterEmbed from '../../components/KickstarterEmbed.astro';
+
+## Overview
+
+What distinguishes successful crowdfunding campaigns from those that fall short?
+This project examines **197,675 Kickstarter projects** to explore how funding
+goals, backer support, campaign duration and market context relate to observed
+outcomes. A dedicated Hong Kong analysis investigates whether its high success
+rate persists when campaigns with comparable categories and funding targets
+are examined.
+
+The report combines distribution analysis, comparative charts and interactive
+exploration. It emphasizes not only the patterns in the data, but also the
+definitions and limitations needed to interpret those patterns correctly.
+The source is the Web Robots Kickstarter September 2025 snapshot; the results
+describe the available sample rather than the entire crowdfunding market.
+
+## Research questions
+
+1. **Campaign outcomes:** What proportion of campaigns succeed, and how does the treatment of live and canceled projects affect that percentage?
+2. **Campaign characteristics:** How do funding goals, observed backer support and campaign duration relate to outcomes?
+3. **Categories and trends:** How do project volume, funding and success differ across categories and launch years, and what can platform recognition tell us?
+4. **Geographic differences:** Do countries with the largest project samples also have the highest completed-campaign success rates?
+5. **Hong Kong:** Does its higher success rate persist within comparable categories and funding-goal bands?
+
+## Interactive report
+
+The report follows these questions in sequence. The principal comparisons are
+visible by default; controls allow closer examination of particular categories,
+sample-size thresholds and funding measures. Hover over, tap or focus a chart
+mark to inspect exact values. Each chart also provides an aggregate data table.
+
+<KickstarterEmbed />
+
+## Visualization decisions
+
+**Aligned panels for different units.** Counts, percentages and monetary
+amounts often need to be compared at the same time. The report places them
+in aligned panels with the same category order and separate labeled scales.
+This removes the need to remember values while switching metrics and avoids
+an apparent relationship created by the arbitrary scaling of two overlaid
+axes. Annual totals and medians similarly share the same year order, but
+retain independent scales.
+
+**A shared axis for the same measure.** The Hong Kong category comparison uses
+a dumbbell chart: two differently shaped marks connected on a single
+success-rate axis. Readers can compare both the direction and size of the
+within-category difference directly.
+
+**Different charts for different questions.** Stacked bars describe project
+status composition; histograms and percentile box plots reveal skew and
+spread; a treemap provides a funding-share overview; and annual bars and
+lines distinguish aggregate totals from typical campaign values. Exact
+comparisons remain available through labeled axes, mark details and tables.
+
+**Interaction for investigation.** Filters change the population, sample-size
+threshold or analytical focus. They supplement the default comparisons rather
+than conceal one half of the evidence. Keyboard access, visible units and
+aggregate data tables support readers with different browsing preferences.
+
+## Methodology and limitations
+
+The standardized table contains 197,676 cleaned records. Removing one
+duplicated project ID leaves 197,675 unique projects, launched between
+April 25, 2009 and September 11, 2025. Funding goals are converted to USD using
+the source static exchange rates. Counts and funding summaries use all
+project states unless a chart explicitly specifies completed campaigns.
+
+R and Tableau supported the original exploratory analysis. The interactive
+web report uses audited aggregate summaries recomputed in Python and
+browser-native SVG charts; row-level project data are not included in the
+page. The original source files remain unchanged.
+
+The snapshot is not assumed to be a complete census of Kickstarter activity.
+Unequal coverage, currency conversion, incomplete recent cohorts and
+unobserved campaign characteristics constrain the conclusions. The purpose
+of the report is to identify and critically evaluate patterns, not to claim
+causal effects or offer guaranteed strategies for campaign success.

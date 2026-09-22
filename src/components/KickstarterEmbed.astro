@@ -1,0 +1,32 @@
+<div class="kickstarter-embed">
+  <p><a href="/projects/kickstarter/index.html" target="_blank" rel="noopener">Open the full-width interactive analysis ↗</a></p>
+  <iframe id="kickstarter-analysis" src="/projects/kickstarter/index.html" title="Kickstarter interactive analysis: five questions, distributions and Hong Kong comparison" loading="lazy"></iframe>
+</div>
+<style>
+  .kickstarter-embed { width:100%; }
+  .kickstarter-embed p { font-family:var(--mono,monospace); font-size:12px; }
+  iframe { display:block; width:100%; height:1200px; border:0; background:#fafaf7; }
+  @media(prefers-color-scheme:dark) { iframe { background:#0e0e0e; } }
+</style>
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>('#kickstarter-analysis');
+  if (frame) {
+    window.addEventListener('message', (event: MessageEvent) => {
+      if (event.source !== frame.contentWindow || event.origin !== location.origin) return;
+      if (event.data?.type === 'kickstarter-navigate') {
+        const offset = Number(event.data.offset);
+        if (Number.isFinite(offset) && offset >= 0 && offset < 100000) {
+          window.scrollTo({ top: window.scrollY + frame.getBoundingClientRect().top + offset - 24, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+        }
+        return;
+      }
+      if (event.data?.type !== 'kickstarter-height') return;
+      const height = Number(event.data.height);
+      if (Number.isFinite(height) && height >= 400 && height <= 100000) frame.style.height = `${Math.ceil(height)}px`;
+    });
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument;
+      if (doc) frame.style.height = `${Math.ceil(doc.body.scrollHeight)}px`;
+    });
+  }
+</script>
