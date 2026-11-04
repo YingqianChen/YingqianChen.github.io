@@ -201,8 +201,8 @@ overfitting seen in the original unregularized LSTM was resolved.
 Segmenting the 2,178 validation records by behavioral regime shows where the
 remaining error lives:
 
-| Segment | n | share | mean \|error\| | max \|error\| |
-|---|---|---|---|---|---|
+| Segment | n | share | mean abs. error | max abs. error |
+|---|---|---|---|---|
 | Working-day peak (7–9, 17–19h) | 366 | 16.8% | **117.9** | **618.9** |
 | Weekend / holiday | 715 | 32.8% | 47.4 | 302.8 |
 | Working-day off-peak | 1,097 | 50.4% | 37.8 | 333.0 |
@@ -214,7 +214,7 @@ Three points stand out:
    commute windows are both the highest-demand and the hardest-to-predict
    periods.
 2. **Average and worst-case error do not always move together.** Off-peak
-   hours have the lowest mean error yet still reach a max \|error\| of 333.0,
+   hours have the lowest mean error yet still reach a maximum error of 333.0,
    above the weekend's 302.8 — occasional outliers persist even in the
    "easiest" regime.
 3. **The practical implication is targeting.** Rebalancing effort is most
