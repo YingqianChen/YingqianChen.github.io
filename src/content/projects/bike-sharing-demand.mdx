@@ -39,6 +39,17 @@ which features matter most?**
   imputed with a Random Forest regressor fit only on training data, avoiding
   leakage.
 
+The target transform is the single most consequential preprocessing choice.
+`log1p` turns the right-skewed count into a near-symmetric variable, and the
+Q-Q plot confirms the log-transformed target is close to normal — which is why
+all neural models were trained on it and predictions back-transformed with
+`expm1`.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/log-transform.png" alt="Two-by-two panel of the log1p transformation. (a) raw count histogram is strongly right-skewed; (b) log1p(count) is near-symmetric; (c) Q-Q plot of raw count shows a heavy right tail; (d) Q-Q plot of log1p(count) lies close to the normal reference line." />
+  <figcaption>Effect of log1p on the target — skewness removed and Q-Q plot aligned with a normal reference.</figcaption>
+</figure>
+
 Working days show a sharp bimodal pattern (morning and evening commute peaks)
 while weekends flatten into a midday plateau — the interaction that motivates
 the feature engineering below.
@@ -92,9 +103,19 @@ attention variant).
 </figure>
 
 The BiLSTM reduces RMSE by 19.3% against the linear baseline (105.94 → 85.03)
-and 15.2% against the ANN. Regularization mattered: the training and validation
-loss curves stay tightly coupled until early stopping triggers around epoch 38,
-confirming the overfitting seen in the original unregularized LSTM was resolved.
+and 15.2% against the ANN. Point metrics aside, the clearest evidence is
+temporal: all four models reproduce the daily cycle, but the BiLSTM and Random
+Forest track the sharp commute peaks most closely, while the ANN
+systematically under-predicts them.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/cover.png" alt="Line plot of hourly demand over the first 168 validation hours. A black 'Actual' line shows the twin daily commute peaks; colored lines for LinearRegression, RandomForest, ANN and LSTM overlay it, with LSTM and RandomForest tracking the peaks most closely." />
+  <figcaption>Validation predictions (first 168 hours) — all four models overlaid on actual demand.</figcaption>
+</figure>
+
+Regularization mattered: the training and validation loss curves stay tightly
+coupled until early stopping triggers around epoch 38, confirming the
+overfitting seen in the original unregularized LSTM was resolved.
 
 <figure>
   <img src="/covers/bike-sharing-demand/lstm-training.png" alt="Line plot of training and validation MSE loss against epochs for the best BiLSTM. Both curves drop steeply in the first five epochs then converge smoothly, with validation tracking training closely until early stopping." />
@@ -103,15 +124,30 @@ confirming the overfitting seen in the original unregularized LSTM was resolved.
 
 Error analysis by behavioral regime shows working-day peak hours (7–9 and
 17–19) carry **3.1× the mean absolute error** of off-peak hours — the commute
-windows are both the highest-demand and the hardest-to-predict periods.
+windows are both the highest-demand and the hardest-to-predict periods. The
+two-panel diagnostic below confirms this: predictions hug the ideal `y = x`
+line overall, while the residual heatmap concentrates the remaining error in
+weekday commute hours.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/diagnostics.png" alt="Two-panel diagnostic for the BiLSTM. Left: scatter of predicted vs. actual demand with a red y=x reference line, points clustering near the line. Right: heatmap of mean absolute error by hour (columns) and workingday (rows), with the highest error in weekday morning and evening commute hours." />
+  <figcaption>BiLSTM actual-vs-predicted scatter (left) and mean |error| by hour × workingday (right).</figcaption>
+</figure>
 
 ## Interpretability (SHAP)
 
 SHAP TreeExplainer on a 500-observation validation sample ranks the top four
 features by mean |SHAP| as **all TTE variables**, with the `days_since_2011`
-growth trend sixth. High `tte_hour_weekday_median` predicts high demand again;
-high humidity suppresses it — validating the feature-engineering design rather
-than leaving it as an assumption.
+growth trend sixth — validating the feature-engineering design rather than
+leaving it as an assumption.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/shap-importance.png" alt="Horizontal bar chart of mean absolute SHAP value for the top 20 features. Temporal target-encoded features (tte_hour_weekday_median, tte_hour_weekday_mean, tte_hour_wd_mean, tte_hour_wd_median) occupy the top ranks, above days_since_2011 and weather features." />
+  <figcaption>SHAP feature importance — TTE features dominate attribution.</figcaption>
+</figure>
+
+The beeswarm adds directional detail: high TTE values (red) push predictions
+up, while high humidity and severe weather (`cat_weather_3`) push them down.
 
 <figure>
   <img src="/covers/bike-sharing-demand/shap-beeswarm.png" alt="SHAP beeswarm plot showing the distribution of SHAP values per feature. Temporal target-encoded features dominate the top of the plot; humidity and weather severity show negative SHAP effects." />
