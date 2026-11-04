@@ -1,0 +1,130 @@
+---
+title: "Bike Sharing Demand Prediction"
+summary: "Hourly bike-share demand forecasting: a regularized BiLSTM beats Random Forest, ANN and linear baselines (RMSE 85.03, R² 0.847); SHAP confirms temporal target-encoded features."
+date: 2026-04-24
+tech:
+  - Python
+  - PyTorch
+  - scikit-learn
+  - pandas
+  - SHAP
+  - NumPy
+  - Matplotlib
+status: shipped
+draft: false
+cover: "/covers/bike-sharing-demand/cover.png"
+---
+
+## Problem
+
+Bike-sharing systems fail operationally when stations run empty during the
+morning rush or overflow at night. Rebalancing fleets across the city is
+expensive, and its cost scales with forecast error — a 10% improvement in
+demand prediction translates directly into fewer unnecessary truck movements
+and higher user satisfaction.
+
+This project forecasts hourly rental counts for Washington D.C.'s Capital
+Bikeshare system (2011–2012, the Kaggle "Bike Sharing Demand" dataset) and
+benchmarks four models of increasing complexity to answer two questions:
+**which model family best captures the temporal structure of bike demand, and
+which features matter most?**
+
+## Data & preprocessing
+
+- **Training set**: 10,886 hourly records (days 1–19 of each month);
+  **test set**: 6,493 records (days 20 onward).
+- **Target**: total `count`, strongly right-skewed (skewness 1.24) → transformed
+  with `log1p`; the neural models additionally standardized the log-target.
+- **Missing windspeed**: 1,313 zero-valued records were treated as missing and
+  imputed with a Random Forest regressor fit only on training data, avoiding
+  leakage.
+
+Working days show a sharp bimodal pattern (morning and evening commute peaks)
+while weekends flatten into a midday plateau — the interaction that motivates
+the feature engineering below.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/heatmap.png" alt="Heatmap of mean hourly demand by hour of day (rows) and workingday status (columns). Working days show two dark peaks around 8am and 5-6pm; weekend hours are spread evenly across midday." />
+  <figcaption>Mean demand by hour × working-day status — commute peaks vs. weekend plateau.</figcaption>
+</figure>
+
+## Feature engineering
+
+Three groups of features are built inside a scikit-learn pipeline:
+
+1. **Calendar & cyclical** — year/month/hour/weekday plus sine/cosine encodings
+   of hour, weekday and month, weekend/peak/commute flags, and a
+   `days_since_2011` growth trend.
+2. **Weather interactions** — `temp_diff` (felt vs. actual temperature),
+   `humidity_wind`, `feels_hot` and `feels_cold`.
+3. **Temporal target-encoded (TTE)** — mean/median of `log1p(count)` grouped by
+   `(hour, workingday)`, `(hour, weekday)`, `(hour, season)`, `(hour, month)`
+   and `(year, month)`, computed exclusively from training-set targets to keep
+   the Kaggle train/test boundary leakage-free.
+
+## Models
+
+| Model | Role |
+|---|---|
+| Linear Regression | Interpretable baseline (standardized numeric + one-hot categorical) |
+| Random Forest | Tuned via randomized search over time-ordered cross-validation folds |
+| ANN (PyTorch MLP) | `(128, 64, 32)` hidden units, dropout 0.2, weight decay |
+| **BiLSTM + attention** | `seq_len=48`, `hidden=64`, 2 layers, bidirectional; gradient clipping, LayerNorm, weight decay, ReduceLROnPlateau, early stopping |
+
+The most instructive result is an **ablation, not an architecture win**: with
+48-hour windows and rich TTE features already encoding typical demand, enabling
+learned attention pooling made generalization *worse* — the best configuration
+used `use_attention=False` (validation loss 0.064 vs. 0.108 for the best
+attention variant).
+
+## Results
+
+| Model | RMSE ↓ | MAE ↓ | R² ↑ | MAPE ↓ |
+|---|---|---|---|---|
+| **BiLSTM** | **85.03** | **54.42** | **0.847** | **25.8%** |
+| ANN | 100.28 | 67.05 | 0.788 | 27.8% |
+| Random Forest | 105.25 | 72.09 | 0.766 | 29.7% |
+| Linear Regression | 105.94 | 70.59 | 0.763 | 29.3% |
+
+<figure>
+  <img src="/covers/bike-sharing-demand/model-comparison.png" alt="Four bar charts, one per metric (RMSE, MAE, R-squared, MAPE), each comparing Linear Regression, Random Forest, ANN and BiLSTM. BiLSTM has the lowest RMSE, MAE and MAPE and the highest R-squared in every panel." />
+  <figcaption>Validation-set metrics for all four models. BiLSTM wins on every metric.</figcaption>
+</figure>
+
+The BiLSTM reduces RMSE by 19.3% against the linear baseline (105.94 → 85.03)
+and 15.2% against the ANN. Regularization mattered: the training and validation
+loss curves stay tightly coupled until early stopping triggers around epoch 38,
+confirming the overfitting seen in the original unregularized LSTM was resolved.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/lstm-training.png" alt="Line plot of training and validation MSE loss against epochs for the best BiLSTM. Both curves drop steeply in the first five epochs then converge smoothly, with validation tracking training closely until early stopping." />
+  <figcaption>Best BiLSTM training dynamics — validation loss tracks training loss without overfitting.</figcaption>
+</figure>
+
+Error analysis by behavioral regime shows working-day peak hours (7–9 and
+17–19) carry **3.1× the mean absolute error** of off-peak hours — the commute
+windows are both the highest-demand and the hardest-to-predict periods.
+
+## Interpretability (SHAP)
+
+SHAP TreeExplainer on a 500-observation validation sample ranks the top four
+features by mean |SHAP| as **all TTE variables**, with the `days_since_2011`
+growth trend sixth. High `tte_hour_weekday_median` predicts high demand again;
+high humidity suppresses it — validating the feature-engineering design rather
+than leaving it as an assumption.
+
+<figure>
+  <img src="/covers/bike-sharing-demand/shap-beeswarm.png" alt="SHAP beeswarm plot showing the distribution of SHAP values per feature. Temporal target-encoded features dominate the top of the plot; humidity and weather severity show negative SHAP effects." />
+  <figcaption>SHAP beeswarm — TTE features dominate attribution; humidity and bad weather suppress demand.</figcaption>
+</figure>
+
+## Outcome & limitations
+
+- BiLSTM reduces RMSE 19.3% vs. the linear baseline and 15.2% vs. the ANN.
+- Point predictions only — no uncertainty estimates, and peak-hour
+  under-prediction remains the dominant residual.
+- Next steps: a dedicated quantile model for peak windows, encoder-decoder
+  multi-step forecasting, and station-level spatial features.
+
+The full pipeline, hyperparameter search and outputs are in the repository's
+`final/code/` directory.
