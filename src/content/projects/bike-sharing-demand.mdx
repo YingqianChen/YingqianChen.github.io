@@ -64,13 +64,14 @@ The target is strongly right-skewed, so the distribution is examined first.
 | Median | 145.00 | 4.984 |
 | Max | 977 | 6.886 |
 
-`log1p` cuts the absolute skewness by 31.5% and flattens the kurtosis to
-near-normal — the reason all neural models train on the log target and
-back-transform predictions with `expm1`.
+`log1p` cuts the absolute skewness by 31.5% (1.242 → −0.851) and brings the
+excess kurtosis near zero (−0.120). This is why **every model** trains on
+`log1p(count)` and back-transforms predictions with `expm1`; the two neural
+models additionally standardize the log target.
 
 <figure>
-  <img src="/covers/bike-sharing-demand/log-transform.png" alt="Two-by-two panel of the log1p transformation. (a) raw count histogram is strongly right-skewed; (b) log1p(count) is near-symmetric; (c) Q-Q plot of raw count shows a heavy right tail; (d) Q-Q plot of log1p(count) lies close to the normal reference line." />
-  <figcaption>Effect of log1p on the target — skewness removed and Q-Q plot aligned with a normal reference.</figcaption>
+  <img src="/covers/bike-sharing-demand/log-transform.png" alt="Two-by-two panel of the log1p transformation. (a) raw count histogram is strongly right-skewed; (b) log1p(count) is much less skewed; (c) Q-Q plot of raw count shows a heavy right tail; (d) Q-Q plot of log1p(count) lies much closer to the normal reference line." />
+  <figcaption>Effect of log1p on the target — the heavy right tail is largely removed and the Q-Q plot moves much closer to a normal reference.</figcaption>
 </figure>
 
 Temporal structure is the strongest signal: working days show a sharp bimodal
@@ -122,26 +123,30 @@ calendar keys available in both splits — no leakage across the Kaggle boundary
 |---|---|
 | Linear Regression | Interpretable baseline (standardized numeric + one-hot categorical) |
 | Random Forest | RandomizedSearchCV over 6 candidates × 3 time-ordered folds (18 fits); best: `n_estimators=150`, `max_depth=12`, `min_samples_split=2`, `min_samples_leaf=2`, `max_features=sqrt` |
-| ANN (PyTorch MLP) | 6 architectures searched; best `(128, 64, 32)` with dropout 0.2, lr 5e-4, batch 256, weight decay 1e-4 (val loss 0.0475) |
-| **BiLSTM + attention** | bidirectional, 2 layers, gradient clipping, LayerNorm, weight decay, ReduceLROnPlateau, early stopping |
+| ANN (PyTorch MLP) | 6 architectures searched; best `(128, 64, 32)` with dropout 0.2, lr 5e-4, batch 256, weight decay 1e-4 |
+| **BiLSTM** | bidirectional, 2 layers; gradient clipping, LayerNorm, weight decay, ReduceLROnPlateau, early stopping (attention ablated — see below) |
 
-The BiLSTM search (6 configurations) ranks the candidate architectures by
-validation loss:
+Two evaluation scales are used and should not be conflated: **hyperparameter
+search** reports MSE on the *standardized log target* over an inner
+time-ordered split, while **final results** report RMSE/MAE/R²/MAPE on the
+*raw count* over the outer holdout.
 
-| seq_len | hidden | layers | dropout | attention | val loss | overfit gap |
-|---|---|---|---|---|---|---|
-| **48** | **64** | **2** | **0.3** | **No** | **0.064** | **+0.005** |
-| 48 | 64 | 2 | 0.4 | Yes | 0.108 | −0.136 |
-| 24 | 64 | 2 | 0.3 | Yes | 0.111 | −0.032 |
-| 24 | 128 | 2 | 0.4 | Yes | 0.115 | −0.087 |
-| 48 | 128 | 2 | 0.3 | Yes | 0.123 | −0.068 |
-| 24 | 64 | 1 | 0.3 | Yes | 0.155 | −0.116 |
+The BiLSTM search (6 configurations) ranks the candidates by validation MSE:
+
+| seq_len | hidden | layers | dropout | attention | val loss (MSE) |
+|---|---|---|---|---|---|
+| **48** | **64** | **2** | **0.3** | **No** | **0.064** |
+| 48 | 64 | 2 | 0.4 | Yes | 0.108 |
+| 24 | 64 | 2 | 0.3 | Yes | 0.111 |
+| 24 | 128 | 2 | 0.4 | Yes | 0.115 |
+| 48 | 128 | 2 | 0.3 | Yes | 0.123 |
+| 24 | 64 | 1 | 0.3 | Yes | 0.155 |
 
 The most instructive result is an **ablation, not an architecture win**: with
 48-hour windows and rich TTE features already encoding typical demand, enabling
 learned attention pooling made generalization *worse* — the best configuration
-uses `use_attention=False` and is also the only one with a healthy
-overfit gap (`+0.005`).
+uses `use_attention=False` and beats the best attention-enabled variant
+(0.064 vs. 0.108).
 
 ## Training & validation strategy
 
@@ -151,8 +156,8 @@ All splits are **chronological** to prevent look-ahead leakage:
   (2011-01-01 → 2012-08-05) for training, 2,178 records (2012-08-05 →
   2012-12-19) for validation.
 - **Random Forest**: `TimeSeriesSplit` (3 folds) for cross-validated tuning.
-- **Neural models**: a time-ordered inner split drives early stopping
-  (patience 12, best-state restoration) during tuning; the winner is then
+- **Neural models**: a time-ordered inner split drives early stopping with
+  best-state restoration during tuning (BiLSTM patience 12); the winner is then
   retrained on the full training block.
 
 ## Results
@@ -173,7 +178,9 @@ The BiLSTM reduces RMSE by **19.7%** against the linear baseline
 (105.94 → 85.03) and **15.2%** against the ANN. The clearest evidence is
 temporal: all four models reproduce the daily cycle, but the BiLSTM and Random
 Forest track the sharp commute peaks most closely, while the ANN
-systematically under-predicts them.
+systematically under-predicts them. (Random Forest looks competitive only on
+this short window — across the full holdout it trails the BiLSTM by ~20 RMSE
+points, as the table shows.)
 
 <figure>
   <img src="/covers/bike-sharing-demand/cover.png" alt="Line plot of hourly demand over the first 168 validation hours. A black 'Actual' line shows the twin daily commute peaks; colored lines for LinearRegression, RandomForest, ANN and LSTM overlay it, with LSTM and RandomForest tracking the peaks most closely." />
@@ -181,7 +188,7 @@ systematically under-predicts them.
 </figure>
 
 Regularization mattered: the training and validation loss curves stay tightly
-coupled until early stopping triggers around epoch 38, confirming the
+coupled until early stopping triggers around epoch 37, confirming the
 overfitting seen in the original unregularized LSTM was resolved.
 
 <figure>
@@ -194,14 +201,26 @@ overfitting seen in the original unregularized LSTM was resolved.
 Segmenting the 2,178 validation records by behavioral regime shows where the
 remaining error lives:
 
-| Segment | n | mean \|error\| | max \|error\| |
-|---|---|---|---|
-| Working-day peak (7–9, 17–19h) | 366 | **117.9** | **618.9** |
-| Weekend / holiday | 715 | 47.4 | 302.8 |
-| Working-day off-peak | 1,097 | 37.8 | 333.0 |
+| Segment | n | share | mean \|error\| | max \|error\| |
+|---|---|---|---|---|---|
+| Working-day peak (7–9, 17–19h) | 366 | 16.8% | **117.9** | **618.9** |
+| Weekend / holiday | 715 | 32.8% | 47.4 | 302.8 |
+| Working-day off-peak | 1,097 | 50.4% | 37.8 | 333.0 |
 
-Working-day peak hours carry **3.1× the mean absolute error** of off-peak
-hours — they are both the highest-demand and the hardest-to-predict periods.
+Three points stand out:
+
+1. **Peak hours are disproportionately hard.** They make up only 16.8% of
+   records but carry **3.1× the mean absolute error** of off-peak hours — the
+   commute windows are both the highest-demand and the hardest-to-predict
+   periods.
+2. **Average and worst-case error do not always move together.** Off-peak
+   hours have the lowest mean error yet still reach a max \|error\| of 333.0,
+   above the weekend's 302.8 — occasional outliers persist even in the
+   "easiest" regime.
+3. **The practical implication is targeting.** Rebalancing effort is most
+   valuable at commute peaks, where forecast error — and therefore the cost of
+   a wrong dispatch — is largest.
+
 The diagnostic below confirms this: predictions hug the ideal `y = x` line
 overall, while the residual heatmap concentrates error in weekday commute
 hours.
