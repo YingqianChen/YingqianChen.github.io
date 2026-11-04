@@ -1,0 +1,5 @@
+﻿model,RMSE,MAE,R2,MAPE,best_params
+LSTM,85.02752311751766,54.41968536376953,0.847308874130249,0.25831368565559387,"{'seq_len': 48, 'hidden_dim': 64, 'lr': 0.0005, 'num_layers': 2, 'dropout': 0.3, 'batch_size': 128, 'epochs': 100, 'patience': 12, 'weight_decay': 0.001, 'bidirectional': True, 'use_attention': False}"
+ANN,100.28040276987075,67.05168151855469,0.787613570690155,0.27810385823249817,"{'hidden_dims': (128, 64, 32), 'dropout': 0.2, 'lr': 0.0005, 'batch_size': 256, 'weight_decay': 0.0001}"
+RandomForest,105.25163327447417,72.09416234146765,0.7660342135050762,0.2969390368875483,"{'model__n_estimators': 150, 'model__min_samples_split': 2, 'model__min_samples_leaf': 2, 'model__max_features': 'sqrt', 'model__max_depth': 12}"
+LinearRegression,105.94205379764153,70.5939529123343,0.762954649101447,0.2930076822441672,{}
