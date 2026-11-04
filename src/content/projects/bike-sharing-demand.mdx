@@ -20,73 +20,140 @@ cover: "/covers/bike-sharing-demand/cover.png"
 Bike-sharing systems fail operationally when stations run empty during the
 morning rush or overflow at night. Rebalancing fleets across the city is
 expensive, and its cost scales with forecast error — a 10% improvement in
-demand prediction translates directly into fewer unnecessary truck movements
-and higher user satisfaction.
+demand prediction translates directly into fewer unnecessary truck movements.
 
-This project forecasts hourly rental counts for Washington D.C.'s Capital
-Bikeshare system (2011–2012, the Kaggle "Bike Sharing Demand" dataset) and
-benchmarks four models of increasing complexity to answer two questions:
-**which model family best captures the temporal structure of bike demand, and
-which features matter most?**
+This project builds an end-to-end pipeline to forecast hourly rental counts
+for Washington D.C.'s Capital Bikeshare system (2011–2012) and benchmarks four
+models to answer two questions: **which model family best captures the
+temporal structure of bike demand, and which features matter most?**
 
-## Data & preprocessing
+## Dataset
 
-- **Training set**: 10,886 hourly records (days 1–19 of each month);
-  **test set**: 6,493 records (days 20 onward).
-- **Target**: total `count`, strongly right-skewed (skewness 1.24) → transformed
-  with `log1p`; the neural models additionally standardized the log-target.
-- **Missing windspeed**: 1,313 zero-valued records were treated as missing and
-  imputed with a Random Forest regressor fit only on training data, avoiding
-  leakage.
+The data is the Kaggle "Bike Sharing Demand" dataset. Each row is one hour of
+system-wide rentals. The training set contains the first 19 days of each
+month, the test set the remainder.
 
-The target transform is the single most consequential preprocessing choice.
-`log1p` turns the right-skewed count into a near-symmetric variable, and the
-Q-Q plot confirms the log-transformed target is close to normal — which is why
-all neural models were trained on it and predictions back-transformed with
-`expm1`.
+| Field | Type | Description |
+|---|---|---|
+| `datetime` | timestamp | hourly timestamp (parsed, chronologically sorted) |
+| `season` | categorical (1–4) | spring / summer / fall / winter |
+| `holiday` | binary | whether the day is a holiday |
+| `workingday` | binary | weekday and not a holiday |
+| `weather` | categorical (1–4) | clear → mist/cloudy → light rain/snow → heavy rain/snow |
+| `temp` | numeric (°C) | actual temperature |
+| `atemp` | numeric (°C) | "feels like" temperature |
+| `humidity` | numeric (%) | relative humidity |
+| `windspeed` | numeric (km/h) | wind speed |
+| `casual` | numeric | casual-user rentals (train only) |
+| `registered` | numeric | registered-user rentals (train only) |
+| `count` | numeric | total rentals — **target** = casual + registered (train only) |
+
+- **Training set**: 10,886 records × 12 columns.
+- **Test set**: 6,493 records × 9 columns (no `casual` / `registered` / `count`).
+
+## Exploratory data analysis
+
+The target is strongly right-skewed, so the distribution is examined first.
+
+| Metric | Raw `count` | `log1p(count)` |
+|---|---|---|
+| Skewness | 1.242 | −0.851 |
+| Kurtosis | 1.299 | −0.120 |
+| Mean | 191.57 | 4.591 |
+| Std | 181.14 | 1.419 |
+| Median | 145.00 | 4.984 |
+| Max | 977 | 6.886 |
+
+`log1p` cuts the absolute skewness by 31.5% and flattens the kurtosis to
+near-normal — the reason all neural models train on the log target and
+back-transform predictions with `expm1`.
 
 <figure>
   <img src="/covers/bike-sharing-demand/log-transform.png" alt="Two-by-two panel of the log1p transformation. (a) raw count histogram is strongly right-skewed; (b) log1p(count) is near-symmetric; (c) Q-Q plot of raw count shows a heavy right tail; (d) Q-Q plot of log1p(count) lies close to the normal reference line." />
   <figcaption>Effect of log1p on the target — skewness removed and Q-Q plot aligned with a normal reference.</figcaption>
 </figure>
 
-Working days show a sharp bimodal pattern (morning and evening commute peaks)
-while weekends flatten into a midday plateau — the interaction that motivates
-the feature engineering below.
+Temporal structure is the strongest signal: working days show a sharp bimodal
+pattern (morning and evening commute peaks), while weekends flatten into a
+midday plateau. This hour × working-day interaction is what the feature
+engineering below is designed to capture.
 
 <figure>
   <img src="/covers/bike-sharing-demand/heatmap.png" alt="Heatmap of mean hourly demand by hour of day (rows) and workingday status (columns). Working days show two dark peaks around 8am and 5-6pm; weekend hours are spread evenly across midday." />
   <figcaption>Mean demand by hour × working-day status — commute peaks vs. weekend plateau.</figcaption>
 </figure>
 
+## Data cleaning
+
+There are **no `NaN` values**, but `windspeed == 0` is implausible and treated
+as missing: **1,313 records in train** and **867 in test**. A Random Forest
+regressor (fit on the non-zero wind records using season, temperature,
+humidity, hour and weekday as predictors) imputes these values. The imputer is
+fit on training data only and then applied to both splits, keeping the
+train/test boundary leakage-free.
+
 ## Feature engineering
 
-Three groups of features are built inside a scikit-learn pipeline:
+Three groups expand the 9 raw columns into **40 features** (6 categorical, 34
+numeric):
 
 1. **Calendar & cyclical** — year/month/hour/weekday plus sine/cosine encodings
-   of hour, weekday and month, weekend/peak/commute flags, and a
-   `days_since_2011` growth trend.
-2. **Weather interactions** — `temp_diff` (felt vs. actual temperature),
-   `humidity_wind`, `feels_hot` and `feels_cold`.
+   of hour, weekday and month; weekend/peak/commute flags; a `days_since_2011`
+   growth trend.
+2. **Weather interactions** — `temp_diff`, `humidity_wind`, `feels_hot`,
+   `feels_cold`.
 3. **Temporal target-encoded (TTE)** — mean/median of `log1p(count)` grouped by
-   `(hour, workingday)`, `(hour, weekday)`, `(hour, season)`, `(hour, month)`
-   and `(year, month)`, computed exclusively from training-set targets to keep
-   the Kaggle train/test boundary leakage-free.
+   five calendar keys (10 columns):
 
-## Models
+| TTE group | Grouping key |
+|---|---|
+| `tte_hour_wd` | (hour, workingday) |
+| `tte_hour_weekday` | (hour, weekday) |
+| `tte_hour_season` | (hour, season) |
+| `tte_hour_month` | (hour, month) |
+| `tte_year_month` | (year, month) |
+
+TTE aggregates are computed **only from training targets** and looked up by
+calendar keys available in both splits — no leakage across the Kaggle boundary.
+
+## Modeling & hyperparameter tuning
 
 | Model | Role |
 |---|---|
 | Linear Regression | Interpretable baseline (standardized numeric + one-hot categorical) |
-| Random Forest | Tuned via randomized search over time-ordered cross-validation folds |
-| ANN (PyTorch MLP) | `(128, 64, 32)` hidden units, dropout 0.2, weight decay |
-| **BiLSTM + attention** | `seq_len=48`, `hidden=64`, 2 layers, bidirectional; gradient clipping, LayerNorm, weight decay, ReduceLROnPlateau, early stopping |
+| Random Forest | RandomizedSearchCV over 6 candidates × 3 time-ordered folds (18 fits); best: `n_estimators=150`, `max_depth=12`, `min_samples_split=2`, `min_samples_leaf=2`, `max_features=sqrt` |
+| ANN (PyTorch MLP) | 6 architectures searched; best `(128, 64, 32)` with dropout 0.2, lr 5e-4, batch 256, weight decay 1e-4 (val loss 0.0475) |
+| **BiLSTM + attention** | bidirectional, 2 layers, gradient clipping, LayerNorm, weight decay, ReduceLROnPlateau, early stopping |
+
+The BiLSTM search (6 configurations) ranks the candidate architectures by
+validation loss:
+
+| seq_len | hidden | layers | dropout | attention | val loss | overfit gap |
+|---|---|---|---|---|---|---|
+| **48** | **64** | **2** | **0.3** | **No** | **0.064** | **+0.005** |
+| 48 | 64 | 2 | 0.4 | Yes | 0.108 | −0.136 |
+| 24 | 64 | 2 | 0.3 | Yes | 0.111 | −0.032 |
+| 24 | 128 | 2 | 0.4 | Yes | 0.115 | −0.087 |
+| 48 | 128 | 2 | 0.3 | Yes | 0.123 | −0.068 |
+| 24 | 64 | 1 | 0.3 | Yes | 0.155 | −0.116 |
 
 The most instructive result is an **ablation, not an architecture win**: with
 48-hour windows and rich TTE features already encoding typical demand, enabling
 learned attention pooling made generalization *worse* — the best configuration
-used `use_attention=False` (validation loss 0.064 vs. 0.108 for the best
-attention variant).
+uses `use_attention=False` and is also the only one with a healthy
+overfit gap (`+0.005`).
+
+## Training & validation strategy
+
+All splits are **chronological** to prevent look-ahead leakage:
+
+- **Outer holdout**: the last 20% of the training set — 8,708 records
+  (2011-01-01 → 2012-08-05) for training, 2,178 records (2012-08-05 →
+  2012-12-19) for validation.
+- **Random Forest**: `TimeSeriesSplit` (3 folds) for cross-validated tuning.
+- **Neural models**: a time-ordered inner split drives early stopping
+  (patience 12, best-state restoration) during tuning; the winner is then
+  retrained on the full training block.
 
 ## Results
 
@@ -102,8 +169,8 @@ attention variant).
   <figcaption>Validation-set metrics for all four models. BiLSTM wins on every metric.</figcaption>
 </figure>
 
-The BiLSTM reduces RMSE by 19.3% against the linear baseline (105.94 → 85.03)
-and 15.2% against the ANN. Point metrics aside, the clearest evidence is
+The BiLSTM reduces RMSE by **19.7%** against the linear baseline
+(105.94 → 85.03) and **15.2%** against the ANN. The clearest evidence is
 temporal: all four models reproduce the daily cycle, but the BiLSTM and Random
 Forest track the sharp commute peaks most closely, while the ANN
 systematically under-predicts them.
@@ -122,12 +189,22 @@ overfitting seen in the original unregularized LSTM was resolved.
   <figcaption>Best BiLSTM training dynamics — validation loss tracks training loss without overfitting.</figcaption>
 </figure>
 
-Error analysis by behavioral regime shows working-day peak hours (7–9 and
-17–19) carry **3.1× the mean absolute error** of off-peak hours — the commute
-windows are both the highest-demand and the hardest-to-predict periods. The
-two-panel diagnostic below confirms this: predictions hug the ideal `y = x`
-line overall, while the residual heatmap concentrates the remaining error in
-weekday commute hours.
+## Error analysis
+
+Segmenting the 2,178 validation records by behavioral regime shows where the
+remaining error lives:
+
+| Segment | n | mean \|error\| | max \|error\| |
+|---|---|---|---|
+| Working-day peak (7–9, 17–19h) | 366 | **117.9** | **618.9** |
+| Weekend / holiday | 715 | 47.4 | 302.8 |
+| Working-day off-peak | 1,097 | 37.8 | 333.0 |
+
+Working-day peak hours carry **3.1× the mean absolute error** of off-peak
+hours — they are both the highest-demand and the hardest-to-predict periods.
+The diagnostic below confirms this: predictions hug the ideal `y = x` line
+overall, while the residual heatmap concentrates error in weekday commute
+hours.
 
 <figure>
   <img src="/covers/bike-sharing-demand/diagnostics.png" alt="Two-panel diagnostic for the BiLSTM. Left: scatter of predicted vs. actual demand with a red y=x reference line, points clustering near the line. Right: heatmap of mean absolute error by hour (columns) and workingday (rows), with the highest error in weekday morning and evening commute hours." />
@@ -136,10 +213,10 @@ weekday commute hours.
 
 ## Interpretability (SHAP)
 
-SHAP TreeExplainer on a 500-observation validation sample ranks the top four
-features by mean |SHAP| as **all TTE variables**, with the `days_since_2011`
-growth trend sixth — validating the feature-engineering design rather than
-leaving it as an assumption.
+SHAP TreeExplainer on a 500-observation validation sample quantifies feature
+attribution. The TTE features account for **63.2% of total |SHAP|** and occupy
+**10 of the top 25** positions — with `days_since_2011` (the growth trend) the
+highest-ranked non-TTE feature.
 
 <figure>
   <img src="/covers/bike-sharing-demand/shap-importance.png" alt="Horizontal bar chart of mean absolute SHAP value for the top 20 features. Temporal target-encoded features (tte_hour_weekday_median, tte_hour_weekday_mean, tte_hour_wd_mean, tte_hour_wd_median) occupy the top ranks, above days_since_2011 and weather features." />
@@ -154,13 +231,22 @@ up, while high humidity and severe weather (`cat_weather_3`) push them down.
   <figcaption>SHAP beeswarm — TTE features dominate attribution; humidity and bad weather suppress demand.</figcaption>
 </figure>
 
-## Outcome & limitations
+## Conclusion & limitations
 
-- BiLSTM reduces RMSE 19.3% vs. the linear baseline and 15.2% vs. the ANN.
-- Point predictions only — no uncertainty estimates, and peak-hour
+The best model (a regularized BiLSTM) reduces RMSE by 19.7% vs. the linear
+baseline, and the pipeline's two strongest contributions are concrete: the
+leakage-free TTE features (63.2% of SHAP attribution) and the architectural
+upgrade that resolved overfitting. The trained model generates the hourly
+test-set submission used for Kaggle evaluation.
+
+Remaining limitations and next steps:
+
+- **Point predictions only** — no uncertainty estimates; peak-hour
   under-prediction remains the dominant residual.
-- Next steps: a dedicated quantile model for peak windows, encoder-decoder
-  multi-step forecasting, and station-level spatial features.
+- **Peak-hour specialization** — a dedicated quantile model for commute windows
+  could target the 3.1× error directly.
+- **Richer inputs** — station-level spatial features, lagged demand, and
+  calendar events are the natural next additions.
 
 The full pipeline, hyperparameter search and outputs are in the repository's
 `final/code/` directory.
