@@ -1,6 +1,6 @@
 ---
 title: "Bike Sharing Demand Prediction"
-summary: "Hourly bike-share demand forecasting: a regularized BiLSTM beats Random Forest, ANN and linear baselines (RMSE 85.03, R² 0.847); SHAP confirms temporal target-encoded features."
+summary: "I built an end-to-end bike-share demand forecaster — a regularized BiLSTM that beats Random Forest, ANN and linear baselines (RMSE 85.03, R² 0.847), with SHAP validating the feature engineering."
 date: 2026-04-24
 tech:
   - Python
@@ -23,10 +23,14 @@ morning rush or overflow at night. Rebalancing fleets across the city is
 expensive, and its cost scales with forecast error — a 10% improvement in
 demand prediction translates directly into fewer unnecessary truck movements.
 
-This project builds an end-to-end pipeline to forecast hourly rental counts
-for Washington D.C.'s Capital Bikeshare system (2011–2012) and benchmarks four
+I built an end-to-end pipeline to forecast hourly rental counts
+for Washington D.C.'s Capital Bikeshare system (2011–2012) and benchmarked four
 models to answer two questions: **which model family best captures the
 temporal structure of bike demand, and which features matter most?**
+
+**My role.** I wrote essentially all of the code — data cleaning, feature
+engineering, model tuning, evaluation and SHAP analysis — and the report. The
+presentation was a team effort built on top of my pipeline.
 
 ## Dataset
 
@@ -251,15 +255,7 @@ up, while high humidity and severe weather (`cat_weather_3`) push them down.
   <figcaption>SHAP beeswarm — TTE features dominate attribution; humidity and bad weather suppress demand.</figcaption>
 </figure>
 
-## Conclusion & limitations
-
-The best model (a regularized BiLSTM) reduces RMSE by 19.7% vs. the linear
-baseline, and the pipeline's two strongest contributions are concrete: the
-leakage-free TTE features (63.2% of SHAP attribution) and the architectural
-upgrade that resolved overfitting. The trained model generates the hourly
-test-set submission used for Kaggle evaluation.
-
-Remaining limitations and next steps:
+## Limitations & next steps
 
 - **Point predictions only** — no uncertainty estimates; peak-hour
   under-prediction remains the dominant residual.

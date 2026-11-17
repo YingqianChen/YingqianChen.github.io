@@ -1,6 +1,6 @@
 ---
 title: "Kickstarter Campaign Performance Analysis"
-summary: "An interactive analysis of funding goals, backer support and regional differences across 197,675 projects, with an in-depth comparison of Hong Kong campaigns."
+summary: "Solo end-to-end analysis of 197,675 Kickstarter campaigns — funding, backers, and geography, with a Hong Kong deep-dive — shipped as an interactive SVG report."
 date: 2026-09-20
 tech:
   - R
@@ -13,14 +13,18 @@ draft: false
 
 import KickstarterEmbed from '../../components/KickstarterEmbed.astro';
 
-## Overview
+## Problem
 
 What distinguishes successful crowdfunding campaigns from those that fall short?
-This project examines **197,675 Kickstarter projects** to explore how funding
+I examined **197,675 Kickstarter projects** to explore how funding
 goals, backer support, campaign duration and market context relate to observed
 outcomes. A dedicated Hong Kong analysis investigates whether its high success
 rate persists when campaigns with comparable categories and funding targets
 are examined.
+
+**My role.** This was a solo project, so I ran it end-to-end:
+exploratory analysis in R, prototyping in Tableau, and the shipped interactive
+report built from Python-recomputed aggregates and browser-native SVG.
 
 The report combines distribution analysis, comparative charts and interactive
 exploration. It emphasizes not only the patterns in the data, but also the
@@ -71,7 +75,7 @@ threshold or analytical focus. They supplement the default comparisons rather
 than conceal one half of the evidence. Keyboard access, visible units and
 aggregate data tables support readers with different browsing preferences.
 
-## Methodology and limitations
+## Limitations & next steps
 
 The standardized table contains 197,676 cleaned records. Removing one
 duplicated project ID leaves 197,675 unique projects, launched between
@@ -89,3 +93,6 @@ Unequal coverage, currency conversion, incomplete recent cohorts and
 unobserved campaign characteristics constrain the conclusions. The purpose
 of the report is to identify and critically evaluate patterns, not to claim
 causal effects or offer guaranteed strategies for campaign success.
+
+Next: extend the Hong Kong comparison with sub-category and year-cohort
+controls, and add a funding-over-time view.
